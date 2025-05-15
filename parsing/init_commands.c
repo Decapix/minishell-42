@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:36:08 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/09 13:51:12 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:41:44 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,17 @@ int	skip_the_quote(char *str, int i)
 	return (i);
 }
 
+int	ft_istoken(char c)
+{
+	if (c == '<' || c == '>' || c == '|')
+		return (1);
+	else
+		return (0);
+}
+
 int	can_be_an_option(char c)
 {
-	if (c == '>' || c == '|' || c == '\n')
+	if (ft_istoken(c) || c == '\n')
 		return (0);
 	if (c == ' ')
 		return (0);
@@ -43,7 +51,7 @@ int	nb_arg(char *str, int i)
 	int		options;
 
 	options = 0;
-	while (str[i] != '\n' && str[i] != '>' && str[i] != '|' && str[i])
+	while (str[i] != '\n' && !ft_istoken(str[i]) && str[i])
 	{
 		if (ft_isspace(str[i]))
 		{

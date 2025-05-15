@@ -1,0 +1,7 @@
+*.o
+minishell
+execution/*.o
+parsing/*.o
+prompt/*.o
+libft/*.o
+

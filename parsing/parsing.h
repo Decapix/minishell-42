@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:32:10 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 14:00:21 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:00:54 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 # define PARSING_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include "../struct.h"
 
 void	exit_program(t_env *mini_env, int error_code);
-void	print_error(int error_code);
+int		print_error(int error_code);
 void	*ft_calloc(size_t nb, size_t size);
 int		check_existence(char *str);
 
-void	init_prompt_structure(t_env *mini_env, int commands, char *str);
+int		init_prompt_structure(t_env *mini_env, char *str);
 int		how_many_commands(char *str);
 
 int		ft_istoken(char c);

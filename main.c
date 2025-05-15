@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 00:11:19 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 13:35:26 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:03:28 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ char	*search_path(t_env *mini_env)
 	return (0);
 }
 
+char	*restart_shell(t_env *mini_env)
+{
+	char	*prompt;
+
+	free_command_struct(mini_env->first_command);
+	prompt = show_shell(mini_env);
+	return (prompt);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env			*mini_env;
@@ -44,15 +53,13 @@ int	main(int argc, char **argv, char **envp)
 	prompt = show_shell(mini_env);
 	while (prompt)
 	{
-		//this is not fun
-		init_prompt_structure(mini_env, how_many_commands(prompt), prompt);
-		free(prompt);
+		while (init_prompt_structure(mini_env, prompt))
+			prompt = restart_shell(mini_env);
 		replace_dollar(mini_env, mini_env->first_command);
 		path = extract_path(search_path(mini_env));
 		execute_command(mini_env, mini_env->first_command, path);
 		free_double_char(path);
-		free_command_struct(mini_env->first_command);
-		prompt = show_shell(mini_env);
+		prompt = restart_shell(mini_env);
 	}
 	exit_program(mini_env, -1);
 	return (0);

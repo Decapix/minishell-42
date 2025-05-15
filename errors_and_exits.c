@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:39:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 14:03:28 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:00:18 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_double_char(char **array)
 	array = NULL;
 }
 
-void	print_error(int error_code)
+int	print_error(int error_code)
 {
 	if (error_code == 1)
 		ft_putstr_fd("error near parse: \\n\n", 2);
@@ -40,13 +40,14 @@ void	print_error(int error_code)
 	if (error_code == 5)
 		ft_putstr_fd("pipe creation as failed\n", 2);
 	if (error_code == 6)
-		ft_putstr_fd("file does not exist\n", 2);
+		ft_putstr_fd("input file does not exist\n", 2);
 	if (error_code == 7)
 		ft_putstr_fd("parse error near: |\n", 2);
 	if (error_code == 8)
 		ft_putstr_fd("parse error near: <\n", 2);
 	if (error_code == 9)
 		ft_putstr_fd("parse error near: >\n", 2);
+	return (-1);
 }
 
 void	free_io(t_io *to_free)

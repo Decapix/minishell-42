@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:02:56 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:50:17 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 14:03:53 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,14 @@ int	give_input(t_env *mini_env, t_shell *command, char *str, int i)
 		exit_program(mini_env, 1);
 	new_io = init_new_io(mini_env, command, 1);
 	if (str[i + 1] == '<')
-	{
-		i = give_name(mini_env, &new_io->io_name, str, ++i);
 		new_io->io_mode = 2;
-	}
 	else
-	{
-		i = give_name(mini_env, &new_io->io_name, str, ++i);
 		new_io->io_mode = 1;
-	}
+	while (ft_isspace(str[i]))
+		i++;
+	if (ft_istoken(str[i]))
+		return (print_error(8), -1);
+	i = give_name(mini_env, &new_io->io_name, str, ++i);
 	command->input++;
 	return (i);
 }
@@ -109,15 +108,14 @@ int	give_output(t_env *mini_env, t_shell *command, char *str, int i)
 		exit_program(mini_env, 2);
 	new_io = init_new_io(mini_env, command, 0);
 	if (str[i + 1] == '>')
-	{
-		i = give_name(mini_env, &new_io->io_name, str, ++i);
 		new_io->io_mode = 2;
-	}
 	else
-	{
-		i = give_name(mini_env, &new_io->io_name, str, i);
 		new_io->io_mode = 1;
-	}
+	while (ft_isspace(str[i]))
+		i++;
+	if (ft_istoken(str[i]))
+		return (print_error(9), -1);
+	i = give_name(mini_env, &new_io->io_name, str, i);
 	command->output++;
 	return (i);
 }

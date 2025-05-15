@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:32:10 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 06:42:18 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 14:00:21 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		check_existence(char *str);
 void	init_prompt_structure(t_env *mini_env, int commands, char *str);
 int		how_many_commands(char *str);
 
+int		ft_istoken(char c);
 int		ft_isspace(char c);
 int		ft_isalpha(char c);
 int		ft_isquote(char c);

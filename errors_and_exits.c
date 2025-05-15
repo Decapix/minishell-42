@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:39:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 11:59:25 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 14:03:28 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	print_error(int error_code)
 		ft_putstr_fd("file does not exist\n", 2);
 	if (error_code == 7)
 		ft_putstr_fd("parse error near: |\n", 2);
+	if (error_code == 8)
+		ft_putstr_fd("parse error near: <\n", 2);
+	if (error_code == 9)
+		ft_putstr_fd("parse error near: >\n", 2);
 }
 
 void	free_io(t_io *to_free)

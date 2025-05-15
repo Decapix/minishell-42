@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:02:29 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:13:04 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/14 12:00:02 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,53 @@
 void	read_with_here_doc(t_env *mini_env, char *here_eof, int fd[4])
 {
 	char	*buff;
+	int		len;
 
-	close(fd[0]);
-	ft_putstr_fd("here_doc> ", 1);
+	close(fd[2]);
+	ft_putstr_fd("> ", 1);
 	buff = get_next_line(0);
-	while (ft_strncmp(buff, here_eof, ft_strlen(buff) - 1))
+	len = ft_strlen(here_eof);
+	here_eof[len] = '\n';
+	while (ft_strncmp(buff, here_eof, len + 1))
 	{
-		ft_putstr_fd(buff, fd[1]);
+		ft_putstr_fd(buff, fd[3]);
 		free(buff);
-		ft_putstr_fd("here_doc> ", 1);
+		ft_putstr_fd("> ", 1);
 		buff = get_next_line(0);
 	}
+	here_eof[len] = 0;
 	free(buff);
-	close(fd[1]);
+	close(fd[3]);
 	exit_program(mini_env, -1);
+}
+
+int	here_doc_parent(pid_t child_id, int fd[4])
+{
+	close(fd[3]);
+	while (!(waitpid(child_id, 0, WNOHANG)))
+		if (g_status == 2)
+			kill(child_id, SIGKILL);
+	return (0);
 }
 
 int	set_input(t_env *mini_env, t_io	*input, int fd[4])
 {
+	pid_t	child_id;
+
 	if (input->io_mode == 1)
 	{
 		if (access(input->io_name, F_OK | R_OK))
 			return (1);
-		fd[2] = open(input->io_name,  O_RDONLY, 0666);
+		fd[2] = open(input->io_name, O_RDONLY, 0666);
 	}
 	if (input->io_mode == 2)
 	{
-		pipe(fd);
-		if (!fork())
+		pipe(&fd[2]);
+		child_id = fork();
+		if (!child_id)
 			read_with_here_doc(mini_env, input->io_name, fd);
-		wait(0);
-		close(fd[1]);
-		dup2(fd[0], fd[2]);
-		close(fd[0]);
+		if (here_doc_parent(child_id, fd))
+			return (1);
 	}
 	if (input->io_mode == 3)
 	{
@@ -82,37 +96,6 @@ void	set_output(t_io *output, int fd[4])
 	}
 }
 
-int	init_exec(t_env *mini_env, t_shell **command, int fd[4], char **path)
-{
-	int		status;
-	t_io	*tmp;
-
-	status = 0;
-	tmp = (*command)->first_input;
-	while (tmp)
-	{
-		if (set_input(mini_env, tmp, fd))
-		{
-			print_error(6);
-			return (2);
-		}
-		tmp = tmp->next_io;
-	}
-	tmp = (*command)->first_output;
-	while (tmp)
-	{
-		set_output(tmp, fd);
-		tmp = tmp->next_io;
-	}
-	if (!(*command)->command)
-		return (2);
-	if (!ft_isbuildin((*command)->command[0]))
-		status = update_path(*command, path);
-	else
-		(*command)->is_buildin = 1;
-	return (status);
-}
-
 void	execute_command(t_env *mini_env, t_shell *command, char **path)
 {
 	int		fd[4];
@@ -122,6 +105,7 @@ void	execute_command(t_env *mini_env, t_shell *command, char **path)
 
 	child_id = init_pid_array(mini_env, size_t_shell(command));
 	i = 0;
+	make_it_zero(fd);
 	while (command)
 	{
 		status = init_exec(mini_env, &command, fd, path);

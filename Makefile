@@ -20,6 +20,7 @@ SRCS = env_mini/init_env.c				\
 	   execution/command_execution.c	\
 	   execution/utils1.c	            \
 	   execution/is_special_buildin.c   \
+	   execution/many_fd.c				\
 	   commands/exit.c					\
 	   commands/env.c					\
 	   commands/pwd.c					\

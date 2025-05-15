@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 00:11:19 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:35:05 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:13:00 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	mini_env = set_up_env(envp);
 	if (!mini_env)
 		return (0);
-	prompt = show_shell();
+	prompt = show_shell(mini_env);
 	while (prompt)
 	{
 		init_prompt_structure(mini_env, how_many_commands(prompt), prompt);
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		execute_command(mini_env, mini_env->first_command, path);
 		free_double_char(path);
 		free_command_struct(mini_env->first_command);
-		prompt = show_shell();
+		prompt = show_shell(mini_env);
 	}
 	exit_program(mini_env, -1);
 	return (0);

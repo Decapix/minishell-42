@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:22:14 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/13 17:44:09 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:09:32 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	change_g(void)
 	g_status = 0;
 }
 
-void	sig_handler_execution(int signal)
+void	sigint_handler_execution(int signal)
 {
 	g_status = signal;
 }
 
-void	sig_handler_readline(int i)
+void	sigint_handler_readline(int i)
 {
 	if (!i)
 		printf("wrong signal received");
@@ -34,27 +34,22 @@ void	sig_handler_readline(int i)
 	return ;
 }
 
-char	*show_shell(void)
+char	*show_shell(t_env *mini_env)
 {
-	char					*prompt;
-	static struct sigaction	*act;
+	char		*prompt;
+	static int	status;
 
 	change_g();
-	if (!act)
-	{
-		act = ft_calloc(1, sizeof(struct sigaction));
-		if (!act)
-			return (0);
-	}
-	act->sa_handler = sig_handler_readline;
-	sigaction(SIGINT, act, NULL);
+	if (!status)
+		status = change_signal(1);
+	if (!status)
+		exit_program(mini_env, 2);
 	prompt = readline("minishell % ");
 	if (prompt)
 		check_out_prompt(&prompt);
+	change_sigint(2);
 	if (prompt)
 		if (prompt[0])
 			add_history(prompt);
-	act->sa_handler = sig_handler_execution;
-	sigaction(SIGINT, act, NULL);
 	return (prompt);
 }

@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:39:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:54:36 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:59:25 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	exit_program(t_env *mini_env, int error_code)
 	t_env	*tmp;
 
 	print_error(error_code);
+	change_signal(0);
 	if (mini_env->first_command && error_code != -1)
 		free_command_struct(mini_env->first_command);
 	while (mini_env)

@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 00:29:47 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:34:49 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:36:22 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ void	write_command(t_env *mini_env, t_shell *command, char *str)
 			break ;
 		i = check_the_char(mini_env, &command, str, i);
 		if (i == 1)
-		{
 			print_error(7);
-			kill(0, SIGINT);
-		}
 	}
 }
 

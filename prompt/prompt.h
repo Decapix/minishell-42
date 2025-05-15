@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:55:45 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:55:47 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:10:04 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ int		prompt_compliance(char *str);
 int		check_out_prompt(char **prompt);
 
 int		ft_strlen(char *str);
-char	*show_shell(void);
+char	*show_shell(t_env *mini_env);
+
+void	sigint_handler_readline(int signal);
+void	sigint_handler_execution(int signal);
+int		change_signal(int mode);
+int		change_sigquit(int mode);
+int		change_sigint(int mode);
 
 #endif

@@ -6,11 +6,28 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:36:08 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 13:49:29 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 14:03:11 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+char	*ft_strndup(char *str, int n)
+{
+	char	*buffer;
+	int		i;
+
+	buffer = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	if (!buffer)
+		return (0);
+	i = 0;
+	while (str[i] && i < n)
+	{
+		buffer[i] = str[i];
+		i++;
+	}
+	return (buffer);
+}
 
 int	skip_the_quote(char *str, int i)
 {

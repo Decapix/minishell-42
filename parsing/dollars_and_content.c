@@ -6,27 +6,23 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 13:04:49 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 16:56:17 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char	*ft_strncopy(char *str, int n)
+int	ft_strcopy(char *s1, char *s2)
 {
-	char	*res;
-	int		i;
+	int	i;
 
 	i = 0;
-	res = ft_calloc(n + 1, sizeof(char));
-	if (!res)
-		return (0);
-	while (i < n)
+	while (s2[i])
 	{
-		res[i] = str[i];
+		s1[i] = s2[i];
 		i++;
 	}
-	return (res);
+	return (0);
 }
 
 int	search_dollar_value(t_env *mini_env, char *name)
@@ -34,7 +30,7 @@ int	search_dollar_value(t_env *mini_env, char *name)
 	while (mini_env->var_name)
 	{
 		if (mini_env->var)
-			if (!ft_strncmp(mini_env->var, name, ft_strlen(name) + 1))
+			if (!ft_strncmp(mini_env->var_name, name, ft_strlen(name) + 1))
 				return (ft_strlen(name));
 		mini_env = mini_env->next_var;
 	}
@@ -53,7 +49,7 @@ int	extract_dollar_name(t_env *mini_env, char *str, int *i)
 		;
 	if (!str)
 		return (j - *i);
-	dollar_name = ft_strncopy(&str[*i + 1], j);
+	dollar_name = ft_strndup(&str[*i + 1], j);
 	if (!dollar_name)
 		exit_program(mini_env, 2);
 	return (search_dollar_value(mini_env, dollar_name));
@@ -96,7 +92,7 @@ int	give_name(t_env *mini_env, char **to_store, char *str, int i)
 	buffer = ft_calloc(str_size + 1, sizeof(char));
 	if (!buffer)
 		exit_program(mini_env, 2);
-	write_and_jump_quotes(buffer, str, i);
+	write_and_jump_quotes(mini_env, buffer, str, i);
 	*to_store = buffer;
 	return (i);
 }

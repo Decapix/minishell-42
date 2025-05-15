@@ -6,53 +6,11 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:02:56 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 15:01:50 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:23:56 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-int	parsing_through_char(t_env *mini_env, char *str, int i)
-{
-	char	c;
-
-	while (!ft_isspace(str[i]) && str[i])
-	{
-		if (ft_isquote(str[i]))
-		{
-			c = str[i++];
-			while (str[i] != c)
-			{
-				if (!str[i])
-					exit_program(mini_env, 0);
-				i++;
-			}
-		}
-		i++;
-	}
-	return (i);
-}
-
-int	give_name(t_env *mini_env, char **to_store, char *str, int i)
-{
-	int		j;
-	char	*buffer;
-
-	if (str[i] == '<' || str[i] == '>')
-		i++;
-	while (ft_isspace(str[i]))
-		i++;
-	j = i;
-	i = parsing_through_char(mini_env, str, i);
-	if (j == i)
-		exit_program(mini_env, 1);
-	buffer = ft_calloc(i - j + 1, sizeof(char));
-	if (!buffer)
-		exit_program(mini_env, 2);
-	write_and_jump_quotes(buffer, str, j);
-	*to_store = buffer;
-	return (i);
-}
 
 t_io	*init_new_io(t_env *mini_env, t_shell *command, int input)
 {

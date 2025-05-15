@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 11:17:17 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/13 17:30:56 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:08:04 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	add_var_content(t_env *begin, t_env *mini_env, char *var, int i)
 }
 
 int	ft_export(t_env *mini_env, t_shell *command)
+	//if no equals steal add to struct the var
 {
 	int		i;
 	t_env	*begin;

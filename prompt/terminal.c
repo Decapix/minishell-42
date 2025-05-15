@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:08:17 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 12:15:35 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 13:48:45 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	change_sigquit(int mode)
 		if (!act)
 			return (0);
 	}
-	act->sa_handler = &action_sigquit; 
+	act->sa_handler = &action_sigquit;
 	sigaction(SIGQUIT, act, NULL);
 	return (1);
 }
@@ -67,7 +67,7 @@ int	change_sigint(int mode)
 
 int	change_signal(int mode)
 {
-	int status;
+	int	status;
 
 	status = change_sigquit(mode);
 	if (!status)

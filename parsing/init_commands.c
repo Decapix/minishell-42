@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:36:08 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 11:41:44 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 13:49:29 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,51 +46,23 @@ int	can_be_an_option(char c)
 		return (0);
 }
 
-int	nb_arg(char *str, int i)
-{
-	int		options;
-
-	options = 0;
-	while (str[i] != '\n' && !ft_istoken(str[i]) && str[i])
-	{
-		if (ft_isspace(str[i]))
-		{
-			i++;
-			continue ;
-		}
-		while (can_be_an_option(str[i]))
-		{
-			if (ft_isquote(str[i]))
-				i = skip_the_quote(str, i);
-			if (i == -1)
-				return (-1);
-			i++;
-		}
-		options++;
-	}
-	return (options);
-}
-
 int	give_command_name(t_env *mini_env, t_shell *command, char *str, int i)
 {
-	int	j;
-	int	index;
-	int	args;
+	int		j;
+	t_list	*tmp;
 
-	index = 0;
 	j = i;
-	args = nb_arg(str, j);
-	if (args == -1)
-		exit_program(mini_env, 3);
-	command->command = ft_calloc(args + 1, sizeof(char *));
-	if (!command->command)
+	tmp = ft_calloc(1, sizeof(t_list));
+	if (!tmp)
 		exit_program(mini_env, 2);
-	i = give_name(mini_env, &command->command[index++], str, j);
-	while (index < args)
+	if (command->command)
 	{
-		if (i == '>')
-			return (i);
-		i = give_name(mini_env, &command->command[index++], str, i);
+		while (command->command->next)
+			command->command = command->command->next;
+		command->command->next = tmp;
 	}
+	else
+		command->command = tmp;
+	i = give_name(mini_env, &tmp->str, str, j);
 	return (i);
 }

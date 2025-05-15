@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:51:31 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/13 17:24:54 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 11:53:38 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exit_program(t_env *mini_env, int error_code);
 void	free_double_char(char **to_free);
 
 int		ft_exit(t_env *mini_env, char **env);
-int		ft_env(char **env);
+int		ft_env(t_env *mini_env, int mode);
 int		ft_echo(char **str);
 int		ft_pwd(void);
 int		ft_export(t_env *mini_env, t_shell *command);

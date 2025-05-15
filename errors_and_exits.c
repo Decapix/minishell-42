@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:39:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 15:00:18 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:16:19 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,13 @@ void	free_command_struct(t_shell *command)
 		tmp = command->next_command;
 		if (command->input)
 			free_io(command->first_input);
-		if (command->command)
-			free_double_char(command->command);
+		while (command->command)
+		{
+			if (command->command->str)
+				free(command->command->str);
+			free(command->command);
+			command->command = command->command->next;
+		}
 		if (command->output)
 			free_io(command->first_output);
 		free(command);

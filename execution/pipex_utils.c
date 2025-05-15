@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:33:11 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/13 14:33:14 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 13:55:13 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	update_path(t_shell *command, char **path)
 	int		i;
 
 	i = 0;
-	tmp = ft_strjoin("/", command->command[0]);
+	tmp = ft_strjoin("/", command->command->str);
 	if (!tmp)
 		return (-1);
 	while (path[i])
@@ -89,9 +89,9 @@ int	update_path(t_shell *command, char **path)
 			return (-1);
 		if (!access(buffer, F_OK | X_OK))
 		{
-			free(command->command[0]);
+			free(command->command->str);
 			free(tmp);
-			command->command[0] = buffer;
+			command->command->str = buffer;
 			return (0);
 		}
 		else

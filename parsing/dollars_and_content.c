@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 14:05:03 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:55:02 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	search_dollar_value(t_env *mini_env, char *name)
 	{
 		if (mini_env->var)
 			if (!ft_strncmp(mini_env->var_name, name, ft_strlen(name) + 1))
-				return (ft_strlen(name));
+				return (ft_strlen(mini_env->var));
 		mini_env = mini_env->next_var;
 	}
 	return (0);
@@ -42,10 +42,10 @@ int	extract_dollar_name(t_env *mini_env, char *str, int *i, char c)
 	int		j;
 	char	*dollar_name;
 
-	j = *i++;
+	j = (*i)++;
 	if (str[j] != '$')
 		ft_putstr_fd("wtf pas de dollar???\n", 2);
-	while (!ft_isspace(str[*i]) && str[*i] != 0 && str[*i] != c)
+	while (!ft_isspace(str[*i]) && str[*i] && str[*i] != c)
 		(*i)++;
 	dollar_name = ft_strndup(&str[j + 1], *i);
 	if (!dollar_name)

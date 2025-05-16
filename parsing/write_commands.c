@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 13:57:03 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:54:20 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)
 			ft_strcopy(buffer, mini_env->var);
 			break ;
 		}
+		mini_env = mini_env->next_var;
 	}
 	return (i);
 }

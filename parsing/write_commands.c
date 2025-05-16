@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 19:12:45 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:18:22 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	handle_quotes(t_env *mini_env, char *buffer, char *str, int *i)
 		else
 			buffer[j++] = str[(*i)++];
 	}
+	(*i)++;
 	return (j);
 }
 

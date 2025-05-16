@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 11:58:35 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:17:39 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_buildin(t_env *mini_env, char **envp, t_shell *command)
 	if (!ft_strncmp(command->command->str, "exit", 5))
 		ft_exit(mini_env, envp);
 	if (!ft_strncmp(command->command->str, "env", 4))
-		ft_env(envp);
+		ft_env(mini_env);
 	if (!ft_strncmp(command->command->str, "pwd", 4))
 		ft_pwd();
 	if (!ft_strncmp(command->command->str, "export", 7))

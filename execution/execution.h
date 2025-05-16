@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 13:12:46 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:18:09 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	make_it_zero(int fd[4]);
 
 int		ft_exit(t_env *mini_env, char **env);
-int		ft_env(char **env);
+int		ft_env(t_env *mini_env);
 int		ft_echo(char **str);
 int		ft_pwd(void);
 int		ft_export(t_env *mini_env, t_shell *command);

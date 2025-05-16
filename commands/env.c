@@ -6,19 +6,19 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:42:24 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/16 13:13:19 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 14:12:55 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commands.h"
 
-int	ft_env(t_env *mini_env, int export)
+int	ft_env(t_env *mini_env)
 {
 	while (mini_env)
 	{
 		if (mini_env->var_name)
 		{
-			if (!mini_env->var && !export)
+			if (!mini_env->var)
 			{
 				mini_env = mini_env->next_var;
 				continue ;

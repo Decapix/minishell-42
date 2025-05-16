@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:04:32 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/16 11:58:19 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:18:40 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_special_buildin(t_env *mini_env, t_shell *command)
 	if (!ft_strncmp(command->command->str, "export", 7))
 	{
 		if (!command->command->next)
-			ft_env(t_env_to_arr(mini_env));
+			ft_env(mini_env);
 		else
 			ft_export(mini_env, command);
 	}

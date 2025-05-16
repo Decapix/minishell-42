@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 19:01:55 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:12:45 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,29 +69,35 @@ int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)
 	return (i);
 }
 
+int	handle_quotes(t_env *mini_env, char *buffer, char *str, int *i)
+{
+	int		j;
+	char	c;
+
+	j = 0;
+	c = str[(*i)++];
+	while (str[(*i)] != c)
+	{
+		if (str[(*i)] == '$' && c == '"')
+		{
+			*i += change_dollar(mini_env, &buffer[j], &str[(*i)], 1);
+			j = ft_strlen(buffer);
+		}
+		else
+			buffer[j++] = str[(*i)++];
+	}
+	return (j);
+}
+
 int	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i)
 {
-	char	c;
 	int		j;
 
 	j = 0;
 	while (!ft_isspace(str[i]) && !ft_istoken(str[i]) && str[i])
 	{
 		if (ft_isquote(str[i]))
-		{
-			c = str[i++];
-			while (str[i] != c)
-			{
-				if (str[i] == '$' && c == '"')
-				{
-					i += change_dollar(mini_env, &buffer[j], &str[i], 1);
-					j = ft_strlen(buffer);
-				}
-				else
-					buffer[j++] = str[i++];
-			}
-			i++;
-		}
+			j = handle_quotes(mini_env, &buffer[j], str, &i);
 		else
 		{
 			if (str[i] == '$')

@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:41:04 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/16 12:01:30 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:36:15 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ int	search_element(t_env *mini_env, char *str)
 
 int	ft_unset(t_env *mini_env, t_shell *command)
 {
-	int	i;
-
-	i = 0;
 	if (!mini_env->var_name || !mini_env->var)
 		return (0);
 	else if (!mini_env->next_var)

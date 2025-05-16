@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 16:56:17 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 12:46:52 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ int	give_name(t_env *mini_env, char **to_store, char *str, int i)
 
 	while (ft_isspace(str[i]))
 		i++;
-	str_size = parsing_through_char(mini_env, str, i);
+	str_size = parsing_through_char(mini_env, str, i) - i;
 	buffer = ft_calloc(str_size + 1, sizeof(char));
 	if (!buffer)
 		exit_program(mini_env, 2);
-	write_and_jump_quotes(mini_env, buffer, str, i);
+	i = write_and_jump_quotes(mini_env, buffer, str, i);
 	*to_store = buffer;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 16:59:24 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:11:42 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,13 @@ int	change_dollar(t_env *mini_env, char *buffer, char *str, int i)
 	return (i);
 }
 
-void	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i)
-	//write until space. until token too
+int	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i)
 {
 	char	c;
 	int		j;
 
 	j = 0;
-	while (!ft_isspace(str[i]) && ft_istoken(str[i]) && str[i])
+	while (!ft_isspace(str[i]) && !ft_istoken(str[i]) && str[i])
 	{
 		if (ft_isquote(str[i]))
 		{
@@ -56,7 +55,8 @@ void	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i)
 		}
 		else
 		{
-			buffer[j++] = str[i++];	
+			buffer[j++] = str[i++];
 		}
 	}
+	return (i);
 }

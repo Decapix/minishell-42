@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:57:50 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/13 14:20:06 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:57:28 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ int	ft_isbuildin(char *str)
 		return (1);
 	if (!ft_strncmp(str, "exit", 5))
 		return (1);
+	return (0);
+}
+
+int	error_child(t_env *mini_env, t_list *lst, char **arg, char **envp)
+{
+	ft_putstr_fd("minishell: no such file or directory: ", 2);
+	ft_putstr_fd(lst->str, 2);
+	ft_putstr_fd("\n", 2);
+	free_double_char(envp);
+	free_double_char(arg);
+	exit_program(mini_env, 127);
 	return (0);
 }
 

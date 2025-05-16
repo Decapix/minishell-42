@@ -6,13 +6,13 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:33:11 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 13:55:13 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:12:17 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	ft_lstsize(t_env *lst)
+int	ft_envsize(t_env *lst)
 {
 	int	i;
 
@@ -20,6 +20,19 @@ int	ft_lstsize(t_env *lst)
 	while (lst)
 	{
 		lst = lst->next_var;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_lstsize(t_list *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
 		i++;
 	}
 	return (i);

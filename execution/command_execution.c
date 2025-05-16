@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/13 18:14:38 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:58:35 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**t_env_to_arr(t_env *mini_env)
 	char	*buffer;
 	int		i;
 
-	env_arr = ft_calloc(ft_lstsize(mini_env) + 1, sizeof(char *));
+	env_arr = ft_calloc(ft_envsize(mini_env) + 1, sizeof(char *));
 	if (!env_arr)
 		exit_program(mini_env, 2);
 	i = 0;
@@ -43,20 +43,16 @@ char	**t_env_to_arr(t_env *mini_env)
 
 void	execute_buildin(t_env *mini_env, char **envp, t_shell *command)
 {
-	if (!ft_strncmp(command->command[0], "exit", 5))
+	if (!ft_strncmp(command->command->str, "exit", 5))
 		ft_exit(mini_env, envp);
-	if (!ft_strncmp(command->command[0], "env", 4))
+	if (!ft_strncmp(command->command->str, "env", 4))
 		ft_env(envp);
-	if (!ft_strncmp(command->command[0], "pwd", 4))
+	if (!ft_strncmp(command->command->str, "pwd", 4))
 		ft_pwd();
-	if (!ft_strncmp(command->command[0], "export", 7))
-	{
-		if (command->command[1])
+	if (!ft_strncmp(command->command->str, "export", 7))
+		if (command->command->next)
 			ft_export(mini_env, command);
-		else
-			ft_env(envp);
-	}
-	if (!ft_strncmp(command->command[0], "unset", 6))
+	if (!ft_strncmp(command->command->str, "unset", 6))
 		ft_unset(mini_env, command);
 	free_double_char(envp);
 	exit_program(mini_env, 0);
@@ -81,31 +77,57 @@ void	set_redirection(int fd[4], t_shell *command)
 		close(fd[3]);
 }
 
+char	**t_lst_to_arr(t_env *mini_env, t_list *lst, char **envp)
+{
+	int		len;
+	int		i;
+	char	**res;
+
+	len = ft_lstsize(lst);
+	res = ft_calloc(len + 1, sizeof(char *));
+	if (!res)
+	{
+		free_double_char(envp);
+		exit_program(mini_env, 2);
+	}
+	i = 0;
+	while (lst)
+	{
+		res[i] = ft_strdup(lst->str);
+		if (!res)
+		{
+			free_double_char(envp);
+			free_double_char(res);
+			exit_program(mini_env, 2);
+		}
+		lst = lst->next;
+		i++;
+	}
+	return (res);
+}
+
 int	exec_com(t_env *mini_env, t_shell *command, int fd[4])
-	//if mem error from malloc in envp init, only one child is killed
 {
 	pid_t	id_command;
 	char	**envp;
+	char	**arg;
 
 	id_command = fork();
 	if (!id_command)
 	{
 		envp = t_env_to_arr(mini_env);
+		arg = t_lst_to_arr(mini_env, command->command, envp);
 		set_redirection(fd, command);
 		if (command->is_buildin)
 			execute_buildin(mini_env, envp, command);
-		execve(command->command[0], command->command, envp);
-		ft_putstr_fd("minishell: no such file or directory: ", 2);
-		ft_putstr_fd(command->command[0], 2);
-		ft_putstr_fd("\n", 2);
-		free_double_char(envp);
-		exit_program(mini_env, 127);
+		execve(command->command->str, arg, envp);
+		error_child(mini_env, command->command, arg, envp);
 	}
 	if (command->input)
 		close(fd[2]);
 	if (command->output)
 		close(fd[3]);
-	if (!command->next_command && !ft_strncmp(command->command[0], "exit", 5))
+	if (!command->next_command && !ft_strncmp(command->command->str, "exit", 5))
 		return (1);
 	return (id_command);
 }

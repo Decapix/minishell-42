@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 09:40:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 14:51:17 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 12:08:30 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	init_exec(t_env *mini_env, t_shell **command, int fd[4], char **path)
 	loop_for_output(*command, fd);
 	if (!(*command)->command)
 		return (2);
-	if (!ft_isbuildin((*command)->command[0]))
+	if (!ft_isbuildin((*command)->command->str))
 		status = update_path(*command, path);
 	else
 		(*command)->is_buildin = 1;

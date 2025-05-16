@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:22:14 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 12:09:32 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:14:44 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ char	*show_shell(t_env *mini_env)
 	static int	status;
 
 	change_g();
+	prompt = 0;
 	if (!status)
 		status = change_signal(1);
 	if (!status)
 		exit_program(mini_env, 2);
-	prompt = readline("minishell % ");
-	if (prompt)
-		check_out_prompt(&prompt);
+	while (1)
+	{
+		prompt = readline("minishell % ");
+		if (!check_out_prompt(&prompt))
+			break ;
+	}
 	change_sigint(2);
 	if (prompt)
 		if (prompt[0])

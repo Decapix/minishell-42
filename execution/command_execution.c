@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 11:58:35 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:29:52 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,21 @@ char	**t_env_to_arr(t_env *mini_env)
 	return (env_arr);
 }
 
-void	execute_buildin(t_env *mini_env, char **envp, t_shell *command)
+void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd)
 {
-	if (!ft_strncmp(command->command->str, "exit", 5))
+	if (!ft_strncmp(cmd->command->str, "echo", 5))
+		ft_echo(arg);
+	if (!ft_strncmp(cmd->command->str, "exit", 5))
 		ft_exit(mini_env, envp);
-	if (!ft_strncmp(command->command->str, "env", 4))
-		ft_env(envp);
-	if (!ft_strncmp(command->command->str, "pwd", 4))
+	if (!ft_strncmp(cmd->command->str, "env", 4))
+		ft_env(mini_env);
+	if (!ft_strncmp(cmd->command->str, "pwd", 4))
 		ft_pwd();
-	if (!ft_strncmp(command->command->str, "export", 7))
-		if (command->command->next)
-			ft_export(mini_env, command);
-	if (!ft_strncmp(command->command->str, "unset", 6))
-		ft_unset(mini_env, command);
+	if (!ft_strncmp(cmd->command->str, "export", 7))
+		if (cmd->command->next)
+			ft_export(mini_env, cmd);
+	if (!ft_strncmp(cmd->command->str, "unset", 6))
+		ft_unset(mini_env, cmd);
 	free_double_char(envp);
 	exit_program(mini_env, 0);
 }
@@ -119,7 +121,7 @@ int	exec_com(t_env *mini_env, t_shell *command, int fd[4])
 		arg = t_lst_to_arr(mini_env, command->command, envp);
 		set_redirection(fd, command);
 		if (command->is_buildin)
-			execute_buildin(mini_env, envp, command);
+			execute_buildin(mini_env, envp, arg, command);
 		execve(command->command->str, arg, envp);
 		error_child(mini_env, command->command, arg, envp);
 	}

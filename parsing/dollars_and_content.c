@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 12:46:52 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 14:05:03 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,22 @@ int	search_dollar_value(t_env *mini_env, char *name)
 	return (0);
 }
 
-int	extract_dollar_name(t_env *mini_env, char *str, int *i)
+int	extract_dollar_name(t_env *mini_env, char *str, int *i, char c)
 {
 	int		j;
 	char	*dollar_name;
 
-	j = *i;
+	j = *i++;
 	if (str[j] != '$')
 		ft_putstr_fd("wtf pas de dollar???\n", 2);
-	while (!ft_isspace(str[++j]))
-		;
-	if (!str)
-		return (j - *i);
-	dollar_name = ft_strndup(&str[*i + 1], j);
+	while (!ft_isspace(str[*i]) && str[*i] != 0 && str[*i] != c)
+		(*i)++;
+	dollar_name = ft_strndup(&str[j + 1], *i);
 	if (!dollar_name)
 		exit_program(mini_env, 2);
-	return (search_dollar_value(mini_env, dollar_name));
+	j = search_dollar_value(mini_env, dollar_name);
+	free(dollar_name);
+	return (j);
 }
 
 int	parsing_through_char(t_env *mini_env, char *str, int i)
@@ -71,11 +71,12 @@ int	parsing_through_char(t_env *mini_env, char *str, int i)
 				if (!str[i])
 					return (i);
 				if (str[i] == '$' && c == '"')
-					dollar_supp = extract_dollar_name(mini_env, str, &i);
+					dollar_supp = extract_dollar_name(mini_env, str, &i, c);
+				i++;
 			}
 		}
 		if (str[i] == '$')
-			dollar_supp = extract_dollar_name(mini_env, str, &i);
+			dollar_supp = extract_dollar_name(mini_env, str, &i, 0);
 		i++;
 	}
 	return (i + dollar_supp);

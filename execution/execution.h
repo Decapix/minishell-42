@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 13:12:46 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:28:25 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	make_it_zero(int fd[4]);
 
 int		ft_exit(t_env *mini_env, char **env);
-int		ft_env(char **env);
+int		ft_env(t_env *mini_env);
 int		ft_echo(char **str);
 int		ft_pwd(void);
 int		ft_export(t_env *mini_env, t_shell *command);
@@ -51,7 +51,7 @@ int		error_child(t_env *mini_env, t_list *lst, char **arg, char **envp);
 
 int		is_special_buildin(t_env *mini_env, t_shell *command);
 int		ft_isbuildin(char *str);
-void	execute_buildin(t_env *mini_env, char **envp, t_shell *command);
+void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd);
 
 int		set_input(t_env *mini_env, t_io	*input, int fd[4]);
 void	set_output(t_io *output, int fd[4]);

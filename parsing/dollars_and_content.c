@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 13:56:38 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:02:52 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	extract_dollar_name(t_env *mini_env, char *str, int *i, char c)
 		ft_putstr_fd("wtf pas de dollar???\n", 2);
 	while (!ft_isspace(str[*i]) && str[*i] && str[*i] != c)
 		(*i)++;
-	dollar_name = ft_strndup(&str[j + 1], ((*i) - 1));
+	dollar_name = ft_strndup(&str[j + 1], ((*i) - j - 1));
 	if (!dollar_name)
 		exit_program(mini_env, 2);
 	j = search_dollar_value(mini_env, dollar_name);
@@ -72,12 +72,14 @@ int	parsing_through_char(t_env *mini_env, char *str, int i)
 					return (i);
 				if (str[i] == '$' && c == '"')
 					dollar_supp = extract_dollar_name(mini_env, str, &i, c);
-				i++;
+				else
+					i++;
 			}
 		}
 		if (str[i] == '$')
 			dollar_supp = extract_dollar_name(mini_env, str, &i, 0);
-		i++;
+		else
+			i++;
 	}
 	return (i + dollar_supp);
 }
@@ -90,7 +92,6 @@ int	give_name(t_env *mini_env, char **to_store, char *str, int i)
 	while (ft_isspace(str[i]))
 		i++;
 	str_size = parsing_through_char(mini_env, str, i) - i;
-	printf("str_size is (should equal new $ size): %d\n", str_size);
 	buffer = ft_calloc(str_size + 1, sizeof(char));
 	if (!buffer)
 		exit_program(mini_env, 2);

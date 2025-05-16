@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 13:50:28 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 19:01:55 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ int	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i)
 			while (str[i] != c)
 			{
 				if (str[i] == '$' && c == '"')
+				{
 					i += change_dollar(mini_env, &buffer[j], &str[i], 1);
+					j = ft_strlen(buffer);
+				}
 				else
 					buffer[j++] = str[i++];
 			}
@@ -92,7 +95,10 @@ int	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i)
 		else
 		{
 			if (str[i] == '$')
+			{
 				i += change_dollar(mini_env, &buffer[j], &str[i], 0);
+				j = ft_strlen(buffer);
+			}
 			else
 				buffer[j++] = str[i++];
 		}

@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 15:55:02 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 17:27:05 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_strcopy(char *s1, char *s2)
 
 int	search_dollar_value(t_env *mini_env, char *name)
 {
-	while (mini_env->var_name)
+	while (mini_env)
 	{
 		if (mini_env->var)
 			if (!ft_strncmp(mini_env->var_name, name, ft_strlen(name) + 1))

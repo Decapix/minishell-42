@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:36:08 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 15:40:06 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 17:17:56 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strndup(char *str, int n)
 	char	*buffer;
 	int		i;
 
-	buffer = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	buffer = ft_calloc(n + 1, sizeof(char));
 	if (!buffer)
 		return (0);
 	i = 0;

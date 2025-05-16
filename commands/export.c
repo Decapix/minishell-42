@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 11:17:17 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/15 15:08:04 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 12:00:16 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static bool	valid_export(t_shell *command)
 {
-	if (command->command[2])
+	if (!command->command->next)
+		return (false);
+	if (!command->command->next->next)
 		return (false);
 	return (true);
 }
@@ -72,7 +74,7 @@ int	ft_export(t_env *mini_env, t_shell *command)
 	if (!mini_env->next_var)
 		exit_program(begin, 2);
 	mini_env = mini_env->next_var;
-	add_var_name(begin, mini_env, command->command[1], &i);
-	add_var_content(begin, mini_env, command->command[1], i);
+	add_var_name(begin, mini_env, command->command->next->str, &i);
+	add_var_content(begin, mini_env, command->command->next->str, i);
 	return (0);
 }

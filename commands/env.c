@@ -6,15 +6,13 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:42:24 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/15 15:14:50 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:13:19 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commands.h"
 
 int	ft_env(t_env *mini_env, int export)
-	// change to t_env and mode. if mode means it was called through export
-	// then print all var event the one without char *var.
 {
 	while (mini_env)
 	{

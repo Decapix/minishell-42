@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 17:24:22 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 17:56:22 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	copy_correct_var(t_env *mini_env, char *str, char *buffer, int i)
 {
 	char	*tmp;
 
-	tmp = ft_strndup(&str[1], i);
+	tmp = ft_strndup(&str[1], i - 1);
 	if (!tmp)
 		exit_program(mini_env, 2);
 	while (mini_env)
@@ -56,8 +56,9 @@ int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)
 	{
 		if (ft_isquote(str[i]) && !quotes && str[i] != '"')
 			i += skip_till_quote(&str[i]);
-		if (str[i++] == '"' && quotes)
+		if (str[i] == '"' && quotes)
 			break ;
+		i++;
 	}
 	if (!mini_env->var_name)
 		return (i);

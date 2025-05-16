@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:36:08 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 14:03:11 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:40:06 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	give_command_name(t_env *mini_env, t_shell *command, char *str, int i)
 {
 	int		j;
 	t_list	*tmp;
+	t_list	*last;
 
 	j = i;
 	tmp = ft_calloc(1, sizeof(t_list));
@@ -74,9 +75,10 @@ int	give_command_name(t_env *mini_env, t_shell *command, char *str, int i)
 		exit_program(mini_env, 2);
 	if (command->command)
 	{
-		while (command->command->next)
-			command->command = command->command->next;
-		command->command->next = tmp;
+		last = command->command;
+		while (last->next)
+			last = last->next;
+		last->next = tmp;
 	}
 	else
 		command->command = tmp;

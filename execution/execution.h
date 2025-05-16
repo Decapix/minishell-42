@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 15:18:09 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 15:28:25 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		error_child(t_env *mini_env, t_list *lst, char **arg, char **envp);
 
 int		is_special_buildin(t_env *mini_env, t_shell *command);
 int		ft_isbuildin(char *str);
-void	execute_buildin(t_env *mini_env, char **envp, t_shell *command);
+void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd);
 
 int		set_input(t_env *mini_env, t_io	*input, int fd[4]);
 void	set_output(t_io *output, int fd[4]);

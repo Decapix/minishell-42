@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 15:54:20 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:02:57 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)
 	int		i;
 
 	i = 0;
-	if (str[i] != '$')
-		ft_putstr_fd("something wrong with change dollar\n", 2);
+	if (str[i++] != '$')
+		ft_putstr_fd("something wrong with change dollar\n++", 2);
 	while (!ft_isspace(str[i]) && !ft_istoken(str[i]) && str[i])
 	{
 		if (ft_isquote(str[i]) && !quotes && str[i] != '"')

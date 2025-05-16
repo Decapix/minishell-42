@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:26:05 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 13:49:08 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:14:41 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ int	check_out_prompt(char **prompt)
 {
 	int	status;
 
+	if (!(*prompt))
+		return (0);
+	if (!(*prompt)[0])
+		return (1);
 	status = prompt_compliance(*prompt);
 	while (status == 1)
 		status = ask_for_pipe(prompt);

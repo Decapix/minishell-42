@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 17:56:22 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 18:13:47 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void	copy_correct_var(t_env *mini_env, char *str, char *buffer, int i)
 	{
 		if (!ft_strncmp(mini_env->var_name, tmp, i + 1))
 		{
+			free(tmp);
+			tmp = 0;
 			ft_strcopy(buffer, mini_env->var);
 			break ;
 		}
 		mini_env = mini_env->next_var;
 	}
-	free(tmp);
+	if (tmp)
+		free(tmp);
 }
 
 int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)

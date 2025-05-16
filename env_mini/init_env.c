@@ -6,23 +6,11 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:25:40 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/10 13:43:44 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 12:10:50 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_mini.h"
-
-void	ft_strcopy(char *paste, char *copy)
-{
-	int	i;
-
-	i = 0;
-	while (copy[i])
-	{
-		paste[i] = copy[i];
-		i++;
-	}
-}
 
 int	search_for_var(char **envp, char *var, int len)
 {

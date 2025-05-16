@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 00:29:47 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:34:49 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 14:47:22 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	how_many_commands(char *str)
 	return (res);
 }
 
-void	write_command(t_env *mini_env, t_shell *command, char *str)
+int	write_command(t_env *mini_env, t_shell *command, char *str)
 {
 	int		i;
 
@@ -44,18 +44,21 @@ void	write_command(t_env *mini_env, t_shell *command, char *str)
 			break ;
 		i = check_the_char(mini_env, &command, str, i);
 		if (i == 1)
-		{
 			print_error(7);
-			kill(0, SIGINT);
-		}
+		if (i == -1)
+			return (1);
 	}
+	return (0);
 }
 
-void	init_prompt_structure(t_env *mini_env, int commands, char *str)
+int	init_prompt_structure(t_env *mini_env, char *str)
 {
 	t_shell	*prompt;
 	t_shell	*first_command;
+	int		status;
+	int		commands;
 
+	commands = how_many_commands(str);
 	if (commands == -1)
 		exit_program(mini_env, 1);
 	prompt = ft_calloc(1, sizeof(t_shell));
@@ -70,5 +73,7 @@ void	init_prompt_structure(t_env *mini_env, int commands, char *str)
 			exit_program(mini_env, 2);
 		prompt = prompt->next_command;
 	}
-	write_command(mini_env, first_command, str);
+	status = write_command(mini_env, first_command, str);
+	free(str);
+	return (status);
 }

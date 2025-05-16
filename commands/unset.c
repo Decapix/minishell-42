@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:41:04 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/13 17:21:56 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 12:01:30 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ int	ft_unset(t_env *mini_env, t_shell *command)
 	if (!mini_env->var_name || !mini_env->var)
 		return (0);
 	else if (!mini_env->next_var)
-		while (command->command[i])
-			search_element(mini_env, command->command[i++]);
+		while (command->command->str)
+			search_element(mini_env, command->command->str);
 	else
-		while (command->command[i])
-			search_list(&mini_env, mini_env, command->command[i++]);
+		while (command->command->str)
+			search_list(&mini_env, mini_env, command->command->str);
 	return (0);
 }

@@ -6,24 +6,74 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:08:17 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/08 10:58:00 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 13:48:45 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prompt.h"
 
-void	restore_terminal(struct termios *old)
+void	action_sigquit(int i)
 {
-	tcsetattr(0, TCSANOW, old);
+	if (i)
+		return ;
+	else
+		return ;
 }
 
-void	configure_terminal(struct termios *old)
+int	change_sigquit(int mode)
 {
-	struct termios	new;
+	static struct sigaction	*act;
 
-	tcgetattr(0, old);
-	new = *old;
-	new.c_lflag &= ~ISIG;
-	tcsetattr(0, TCSANOW, &new);
-	return ;
+	if (!mode)
+	{
+		if (act)
+			free(act);
+		return (1);
+	}
+	if (!act)
+	{
+		act = ft_calloc(1, sizeof(struct sigaction));
+		if (!act)
+			return (0);
+	}
+	act->sa_handler = &action_sigquit;
+	sigaction(SIGQUIT, act, NULL);
+	return (1);
+}
+
+int	change_sigint(int mode)
+{
+	static struct sigaction	*act;
+
+	if (!mode)
+	{
+		if (act)
+			free(act);
+		return (1);
+	}
+	if (!act)
+	{
+		act = ft_calloc(1, sizeof(struct sigaction));
+		if (!act)
+			return (0);
+	}
+	if (mode == 1)
+		act->sa_handler = &sigint_handler_readline;
+	if (mode == 2)
+		act->sa_handler = &sigint_handler_execution;
+	sigaction(SIGINT, act, NULL);
+	return (1);
+}
+
+int	change_signal(int mode)
+{
+	int	status;
+
+	status = change_sigquit(mode);
+	if (!status)
+		return (status);
+	status = change_sigint(mode);
+	if (!status)
+		return (status);
+	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:16:50 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/14 07:52:41 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/15 12:18:10 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 
 extern volatile sig_atomic_t	g_status;
 
+typedef struct basic_list
+{
+	char				*str;
+	struct basic_list	*next;
+}	t_list;
+
 typedef struct input_output
 {
 	int					io_mode;
@@ -30,7 +36,7 @@ typedef struct shell_command
 {
 	int						input;
 	t_io					*first_input;
-	char					**command;
+	t_list					*command;
 	int						output;
 	t_io					*first_output;
 	bool					is_buildin;

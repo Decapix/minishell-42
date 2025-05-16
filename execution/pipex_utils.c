@@ -6,13 +6,13 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:33:11 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/13 14:33:14 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:12:17 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	ft_lstsize(t_env *lst)
+int	ft_envsize(t_env *lst)
 {
 	int	i;
 
@@ -20,6 +20,19 @@ int	ft_lstsize(t_env *lst)
 	while (lst)
 	{
 		lst = lst->next_var;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_lstsize(t_list *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
 		i++;
 	}
 	return (i);
@@ -79,7 +92,7 @@ int	update_path(t_shell *command, char **path)
 	int		i;
 
 	i = 0;
-	tmp = ft_strjoin("/", command->command[0]);
+	tmp = ft_strjoin("/", command->command->str);
 	if (!tmp)
 		return (-1);
 	while (path[i])
@@ -89,9 +102,9 @@ int	update_path(t_shell *command, char **path)
 			return (-1);
 		if (!access(buffer, F_OK | X_OK))
 		{
-			free(command->command[0]);
+			free(command->command->str);
 			free(tmp);
-			command->command[0] = buffer;
+			command->command->str = buffer;
 			return (0);
 		}
 		else

@@ -5,12 +5,13 @@ CFLAGS = -Wall -Wextra -Werror -g3
 SRCS = env_mini/init_env.c				\
 	   env_mini/extract_env.c			\
 	   env_mini/extract_path.c			\
-	   env_mini/update_env.c			\
 	   parsing/from_str_to_struct.c		\
 	   parsing/init_commands.c			\
 	   parsing/init_io.c				\
 	   parsing/init_pipes.c				\
 	   parsing/word_analysing.c			\
+	   parsing/dollars_and_content.c	\
+	   parsing/write_commands.c			\
 	   prompt/interface.c				\
 	   prompt/get_next_line.c			\
 	   prompt/terminal.c				\
@@ -20,6 +21,7 @@ SRCS = env_mini/init_env.c				\
 	   execution/command_execution.c	\
 	   execution/utils1.c	            \
 	   execution/is_special_buildin.c   \
+	   execution/many_fd.c				\
 	   commands/exit.c					\
 	   commands/env.c					\
 	   commands/pwd.c					\

@@ -6,24 +6,29 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 14:42:24 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/13 18:13:55 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:13:19 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "commands.h"
 
-int	ft_env(char **env)
+int	ft_env(t_env *mini_env, int export)
 {
-	int	i;
-
-	i = 0;
-	if (!env)
-		return (write(1, "\n", 1));
-	while (env[i])
+	while (mini_env)
 	{
-		write(1, env[i], ft_strlen(env[i]));
-		write(1, "\n", 1);
-		i++;
+		if (mini_env->var_name)
+		{
+			if (!mini_env->var && !export)
+			{
+				mini_env = mini_env->next_var;
+				continue ;
+			}
+			ft_putstr_fd(mini_env->var_name, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(mini_env->var, 1);
+			ft_putstr_fd("\n", 1);
+		}
+		mini_env = mini_env->next_var;
 	}
 	return (0);
 }

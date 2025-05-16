@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:32:10 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 16:58:08 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 12:47:05 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		ft_isquote(char c);
 int		ft_isprint(char c);
 int		check_the_char(t_env *mini_env, t_shell **command, char *str, int i);
 
-void	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i);
+int		write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i);
 t_io	*init_new_io(t_env *mini_env, t_shell *command, int input);
 
 int		give_input(t_env *mini_env, t_shell *command, char *str, int i);

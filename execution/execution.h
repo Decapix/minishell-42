@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 15:01:10 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:12:46 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int		ft_export(t_env *mini_env, t_shell *command);
 int		ft_unset(t_env *mini_env, t_shell *command);
 
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_lstsize(t_env *lst);
+int		ft_envsize(t_env *lst);
+int		ft_lstsize(t_list *lst);
 
 char	*get_next_line(int fd);
 
@@ -46,6 +47,7 @@ char	**t_env_to_arr(t_env *mini_env);
 void	execute_command(t_env *mini_env, t_shell *command, char **path);
 int		update_path(t_shell *command, char **path);
 int		exec_com(t_env *env, t_shell *command, int fd[4]);
+int		error_child(t_env *mini_env, t_list *lst, char **arg, char **envp);
 
 int		is_special_buildin(t_env *mini_env, t_shell *command);
 int		ft_isbuildin(char *str);

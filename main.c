@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 00:11:19 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 15:03:28 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:13:02 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		while (init_prompt_structure(mini_env, prompt))
 			prompt = restart_shell(mini_env);
-		replace_dollar(mini_env, mini_env->first_command);
 		path = extract_path(search_path(mini_env));
 		execute_command(mini_env, mini_env->first_command, path);
 		free_double_char(path);

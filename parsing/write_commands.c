@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 19:18:22 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 07:54:34 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ int	skip_till_quote(char *str)
 	return (i);
 }
 
-void	copy_correct_var(t_env *mini_env, char *str, char *buffer, int i)
+int	copy_correct_var(t_env *mini_env, char *str, char *buffer, int i)
 {
 	char	*tmp;
 
 	tmp = ft_strndup(&str[1], i - 1);
 	if (!tmp)
 		exit_program(mini_env, 2);
+	if (str[i] == '?')
+		return (ft_strcopy(buffer, mini_itoa(mini_env->exit)));
 	while (mini_env)
 	{
 		if (!ft_strncmp(mini_env->var_name, tmp, i + 1))
@@ -46,6 +48,7 @@ void	copy_correct_var(t_env *mini_env, char *str, char *buffer, int i)
 	}
 	if (tmp)
 		free(tmp);
+	return (0);
 }
 
 int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)
@@ -55,13 +58,15 @@ int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)
 	i = 0;
 	if (str[i++] != '$')
 		ft_putstr_fd("something wrong with change dollar\n++", 2);
-	while (!ft_isspace(str[i]) && !ft_istoken(str[i]) && str[i])
+	while (!ft_isspace(str[i]) && !ft_istoken(str[i]) && ft_isdollar(str[i]))
 	{
 		if (ft_isquote(str[i]) && !quotes && str[i] != '"')
 			i += skip_till_quote(&str[i]);
 		if (str[i] == '"' && quotes)
 			break ;
 		i++;
+		if (str[i - 1] == '?' || str[i - 1] == '$')
+			break ;
 	}
 	if (!mini_env->var_name)
 		return (i);

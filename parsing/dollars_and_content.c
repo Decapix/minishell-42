@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 19:02:52 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 08:41:34 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_strcopy(char *s1, char *s2)
 
 int	search_dollar_value(t_env *mini_env, char *name)
 {
+	if (name[0] == '?')
+		return (ft_intlen(mini_env->exit));
 	while (mini_env)
 	{
 		if (mini_env->var)
@@ -45,8 +47,12 @@ int	extract_dollar_name(t_env *mini_env, char *str, int *i, char c)
 	j = (*i)++;
 	if (str[j] != '$')
 		ft_putstr_fd("wtf pas de dollar???\n", 2);
-	while (!ft_isspace(str[*i]) && str[*i] && str[*i] != c)
+	while (!ft_isspace(str[*i]) && ft_isdollar(str[*i]) && str[*i] != c)
+	{
+		if (str[*i] == '?' || str[*i] == '$')
+			break ;
 		(*i)++;
+	}
 	dollar_name = ft_strndup(&str[j + 1], ((*i) - j - 1));
 	if (!dollar_name)
 		exit_program(mini_env, 2);
@@ -70,7 +76,7 @@ int	parsing_through_char(t_env *mini_env, char *str, int i)
 			{
 				if (!str[i])
 					return (i);
-				if (str[i] == '$' && c == '"')
+				if (str[i] == '$' && c == '"' && ft_isdollar(str[i]))
 					dollar_supp = extract_dollar_name(mini_env, str, &i, c);
 				else
 					i++;

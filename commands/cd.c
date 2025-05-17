@@ -11,169 +11,103 @@
 /* ************************************************************************** */
 
 #include "commands.h"
-
-#include <unistd.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
-t_list *ft_lstnew(char *str)
+static char	*env_get(t_env *mini_env, char *name)
 {
-    t_list *node;
+	t_env	*cur;
+	size_t	len;
 
-    node = malloc(sizeof(t_list));
-    if (!node)
-        return (NULL);
-    node->str = str;
-    node->next = NULL;
-    return (node);
+	len = ft_strlen(name);
+	cur = mini_env;
+	while (cur)
+	{
+		if (ft_strncmp(cur->var_name, name, len) == 0
+			&& cur->var_name[len] == '\0')
+			return (cur->var);
+		cur = cur->next_var;
+	}
+	return (NULL);
 }
 
-void ft_lstadd_back(t_list **lst, t_list *new)
+static int	call_export(t_env *mini_env, char *var, char *val)
 {
-    t_list *last;
+	char	*arg;
+	t_list	*lst;
+	int		ret;
+	t_shell	cmd;
 
-    if (!lst || !new)
-        return;
-    if (*lst == NULL)
-    {
-        *lst = new;
-        return;
-    }
-    last = *lst;
-    while (last->next)
-        last = last->next;
-    last->next = new;
+	arg = join_var_equals_value(var, val);
+	if (!arg)
+		return (1);
+	lst = ft_lstnew(ft_strdup("export"));
+	ft_lstadd_back(&lst, ft_lstnew(arg));
+	cmd.command = lst;
+	cmd.is_buildin = 1;
+	cmd.input = 0;
+	cmd.output = 1;
+	cmd.first_input = NULL;
+	cmd.first_output = NULL;
+	cmd.next_command = NULL;
+	ret = ft_export(mini_env, &cmd);
+	ft_lstclear(&lst);
+	return (ret);
 }
 
-void ft_lstclear(t_list **lst)
+int	ft_check_and_chdir(t_env *env, char *target, char *cwd)
 {
-    t_list *tmp;
+	struct stat	sb;
 
-    if (!lst)
-        return;
-    while (*lst)
-    {
-        tmp = (*lst)->next;
-        free((*lst)->str);
-        free(*lst);
-        *lst = tmp;
-    }
+	if (stat(target, &sb) != 0)
+		return (perror("cd"), 1);
+	if (!S_ISDIR(sb.st_mode))
+	{
+		write(2, "cd: not a directory: ", 22);
+		write(2, target, ft_strlen(target));
+		write(2, "\n", 1);
+		return (1);
+	}
+	if (!getcwd(cwd, PATH_MAX))
+		return (perror("getcwd"), 1);
+	if (chdir(target) != 0)
+		return (perror("cd"), 1);
+	if (call_export(env, "OLDPWD", cwd) != 0)
+		return (1);
+	if (!getcwd(cwd, PATH_MAX))
+		return (perror("getcwd"), 1);
+	if (call_export(env, "PWD", cwd) != 0)
+		return (1);
+	return (0);
 }
 
-// Recherche dans mini_env la valeur de la variable name, retourne NULL si non trouvée.
-static char *env_get(t_env *mini_env, char *name)
+int	ft_cd(t_env *env, t_shell *cmd)
 {
-    t_env *cur = mini_env;
-    size_t len = ft_strlen(name);
-    while (cur)
-    {
-        if (ft_strncmp(cur->var_name, name, len) == 0 && cur->var_name[len] == '\0')
-            return cur->var;
-        cur = cur->next_var;
-    }
-    return NULL;
-}
+	t_list	*args;
+	char	*target;
+	char	*home;
+	char	cwd[PATH_MAX];
 
-// Crée un t_shell contenant une seule commande `export VAR=val` et l’appelle
-static int call_export(t_env *mini_env, char *var, char *val)
-{
-    // Construire la chaîne "VAR=val"
-    char *arg = malloc(ft_strlen(var) + 1 + ft_strlen(val) + 1);
-    if (!arg) return 1;
-    sprintf(arg, "%s=%s", var, val);
-
-    // Construire la liste des tokens ["export", "VAR=val"]
-    t_list *lst = ft_lstnew(ft_strdup("export"));
-    ft_lstadd_back(&lst, ft_lstnew(arg));
-
-    // Préparer la structure shell
-    t_shell cmd = { .command = lst, .is_buildin = true };
-
-    int ret = ft_export(mini_env, &cmd);
-
-    // libération
-    ft_lstclear(&lst);
-    return ret;
-}
-
-int ft_cd(t_env *mini_env, t_shell *command)
-{
-    char *target;
-    char cwd[PATH_MAX];
-    char *home;
-    t_list *args = command->command;
-
-    // 1. Récupération de l'argument
-    //    args->str == "cd", donc on passe au suivant
-    if (args && args->next && args->next->str)
-        target = args->next->str;
-    else
-    {
-        home = env_get(mini_env, "HOME");
-        if (!home)
-        {
-            fprintf(stderr, "cd: HOME not set\n");
-            return 1;
-        }
-        target = home;
-    }
-
-    // 1b. Cas spécial '-'
-    if (ft_strncmp(target, "-", ft_strlen(target)) == 0)
-    {
-        char *old = env_get(mini_env, "OLDPWD");
-        if (!old)
-        {
-            fprintf(stderr, "cd: OLDPWD not set\n");
-            return 1;
-        }
-        target = old;
-        // On affiche la nouvelle cible comme bash le fait
-        printf("%s\n", target);
-    }
-
-    // 2. Vérifier que target existe et est un répertoire
-    struct stat sb;
-    if (stat(target, &sb) != 0)
-    {
-        perror("cd");
-        return 1;
-    }
-    if (!S_ISDIR(sb.st_mode))
-    {
-        fprintf(stderr, "cd: not a directory: %s\n", target);
-        return 1;
-    }
-
-    // 3. Sauvegarder le pwd courant pour OLDPWD
-    if (!getcwd(cwd, sizeof(cwd)))
-    {
-        perror("getcwd");
-        return 1;
-    }
-
-    // 4. Chdir
-    if (chdir(target) != 0)
-    {
-        perror("cd");
-        return 1;
-    }
-
-    // 5. Mettre à jour OLDPWD puis PWD
-    if (call_export(mini_env, "OLDPWD", cwd) != 0)
-        return 1;
-
-    // récup nouveau pwd
-    if (!getcwd(cwd, sizeof(cwd)))
-    {
-        perror("getcwd");
-        return 1;
-    }
-    if (call_export(mini_env, "PWD", cwd) != 0)
-        return 1;
-
-    return 0;
+	args = cmd->command;
+	if (args && args->next && args->next->str)
+		target = args->next->str;
+	else
+	{
+		home = env_get(env, "HOME");
+		if (!home)
+			return (write(2, "cd: HOME not set\n", 18), 1);
+		target = home;
+	}
+	if (ft_strncmp(target, "-", ft_strlen(target)) == 0)
+	{
+		target = env_get(env, "OLDPWD");
+		if (!target)
+			return (write(2, "cd: OLDPWD not set\n", 20), 1);
+		printf("%s\n", target);
+	}
+	return (ft_check_and_chdir(env, target, cwd));
 }

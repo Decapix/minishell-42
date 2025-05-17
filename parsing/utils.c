@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:50:11 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/17 08:42:58 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 12:09:36 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	ft_isdollar(char c)
 		return (1);
 	else if (c == '_')
 		return (1);
+	else if (c == '$')
+		return (2);
 	else
 		return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:16:50 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 12:18:10 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 06:07:33 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct var_environmment
 	char					*var;
 	struct var_environmment	*next_var;
 	t_shell					*first_command;
+	int						exit;
 }			t_env;
 
 #endif

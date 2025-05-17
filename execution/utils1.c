@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:57:50 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/16 11:57:28 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 06:18:42 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	error_child(t_env *mini_env, t_list *lst, char **arg, char **envp)
 	free_double_char(envp);
 	free_double_char(arg);
 	exit_program(mini_env, 127);
-	return (0);
+	return (127);
 }
 
 int	size_t_shell(t_shell *command)

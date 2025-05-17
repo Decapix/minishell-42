@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:33:11 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 13:12:17 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 06:39:09 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (res);
 }
 
-void	control_for_signal(pid_t *child_id, int total_child)
+int	sig_ctr(pid_t *child_id, int total_child)
 {
 	int		i;
 	int		tmp;		
 	pid_t	result;
+	int		status;
 
 	tmp = total_child;
 	result = 0;
@@ -72,17 +73,18 @@ void	control_for_signal(pid_t *child_id, int total_child)
 		i = 0;
 		while (i < tmp)
 		{
-			if (child_id[i++])
-				result = waitpid(child_id[i - 1], 0, WNOHANG);
+			if (i == tmp - 1 && child_id[i])
+				result = waitpid(child_id[i], &status, WNOHANG);
+			else if (child_id[i])
+				result = waitpid(child_id[i], 0, WNOHANG);
 			if (result)
-			{
-				child_id[i - 1] = 0;
-				total_child--;
-			}
+				child_id[i] = decrement_return_z(&total_child);
 			if (g_status == 2)
 				paint_in_red(child_id, tmp);
+			i++;
 		}
 	}
+	return (sync_status(status));
 }
 
 int	update_path(t_shell *command, char **path)

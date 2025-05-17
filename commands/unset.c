@@ -29,7 +29,7 @@ int	search_list(t_env **begin, t_env *mini_env, char *str)
 	tmp2 = 0;
 	while (mini_env)
 	{
-		if (!ft_strncmp(mini_env->var_name, str, ft_strlen(str)))
+		if (mini_env->var_name && !ft_strncmp(mini_env->var_name, str, ft_strlen(str) + 1))
 		{
 			tmp1 = mini_env->next_var;
 			prune_element(mini_env);
@@ -51,7 +51,7 @@ int	search_list(t_env **begin, t_env *mini_env, char *str)
 
 int	search_element(t_env *mini_env, char *str)
 {
-	if (!ft_strncmp(mini_env->var_name, str, ft_strlen(str)))
+	if (mini_env->var_name && !ft_strncmp(mini_env->var_name, str, ft_strlen(str) + 1))
 		return (prune_element(mini_env));
 	else
 		return (1);
@@ -59,13 +59,22 @@ int	search_element(t_env *mini_env, char *str)
 
 int	ft_unset(t_env *mini_env, t_shell *command)
 {
-	if (!mini_env->var_name || !mini_env->var)
+	t_list *cmd_args;
+	t_env *begin;
+	
+	if (!mini_env || !command->command->next)
 		return (0);
-	else if (!mini_env->next_var)
-		while (command->command->str)
-			search_element(mini_env, command->command->str);
-	else
-		while (command->command->str)
-			search_list(&mini_env, mini_env, command->command->str);
+	
+	begin = mini_env;
+	cmd_args = command->command->next;
+	
+	while (cmd_args)
+	{
+		if (!mini_env->next_var)
+			search_element(mini_env, cmd_args->str);
+		else
+			search_list(&begin, begin, cmd_args->str);
+		cmd_args = cmd_args->next;
+	}
 	return (0);
 }

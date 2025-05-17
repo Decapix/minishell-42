@@ -31,5 +31,7 @@ int	is_special_buildin(t_env *mini_env, t_shell *command)
 	}
 	if (!ft_strncmp(command->command->str, "unset", 6))
 		ft_unset(mini_env, command);
+	if (!ft_strncmp(command->command->str, "cd", 3))
+		ft_cd(mini_env, command);
 	return (0);
 }

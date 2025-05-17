@@ -36,6 +36,7 @@ int		ft_echo(char **str);
 int		ft_pwd(void);
 int		ft_export(t_env *mini_env, t_shell *command);
 int		ft_unset(t_env *mini_env, t_shell *command);
+int     ft_cd(t_env *mini_env, t_shell *command);
 
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_envsize(t_env *lst);

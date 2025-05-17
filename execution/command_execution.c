@@ -56,6 +56,8 @@ void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd)
 			ft_export(mini_env, cmd);
 	if (!ft_strncmp(cmd->command->str, "unset", 6))
 		ft_unset(mini_env, cmd);
+	if (!ft_strncmp(cmd->command->str, "cd", 3))
+		ft_cd(mini_env, cmd);
 	free_double_char(envp);
 	exit_program(mini_env, 0);
 }

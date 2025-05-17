@@ -12,50 +12,6 @@
 
 #include "commands.h"
 
-static bool	valid_export(t_shell *command)
-{
-	if (!command->command->next)
-		return (false);
-	return (true);
-}
-
-void	add_var_name(t_env *begin, t_env *mini_env, char *var, int *i)
-{
-	int		j;
-	char	*res;
-
-	while (var[*i] && var[*i] != '=')
-		(*i)++;
-	j = 0;
-	res = ft_calloc(*i + 1, sizeof(char));
-	if (!res)
-		exit_program(begin, 2);
-	while (j < *i)
-	{
-		res[j] = var[j];
-		j++;
-	}
-	mini_env->var_name = res;
-}
-
-void	add_var_content(t_env *begin, t_env *mini_env, char *var, int i)
-{
-	char	*res;
-	int		j;
-	int		k;
-
-	j = ++i;
-	while (var[i])
-		i++;
-	res = ft_calloc(i - j + 1, sizeof(char));
-	if (!res)
-		exit_program(begin, 2);
-	k = 0;
-	while (j < i)
-		res[k++] = var[j++];
-	mini_env->var = res;
-}
-
 static int	extract_var_content(char *var, int i, t_env *mini_env)
 {
 	char	*content;
@@ -73,7 +29,6 @@ static int	extract_var_content(char *var, int i, t_env *mini_env)
 	k = 0;
 	while (j < i)
 		content[k++] = var[j++];
-	
 	free(mini_env->var);
 	mini_env->var = content;
 	return (1);
@@ -83,9 +38,8 @@ static int	find_and_update_var(t_env *mini_env, char *var, int max_len)
 {
 	while (mini_env)
 	{
-		if (mini_env->var_name && 
-			!ft_strncmp(mini_env->var_name, var, max_len) && 
-			ft_strlen(mini_env->var_name) == max_len)
+		if (mini_env->var_name && !ft_strncmp(mini_env->var_name, var, max_len)
+			&& ft_strlen(mini_env->var_name) == max_len)
 		{
 			if (ft_strchr(var, '='))
 				return (extract_var_content(var, max_len, mini_env));
@@ -121,15 +75,11 @@ int	ft_export(t_env *mini_env, t_shell *command)
 	i = 0;
 	if (!valid_export(command))
 		return (0);
-	
 	var = command->command->next->str;
-	
 	while (var[i] && var[i] != '=')
 		i++;
-	
 	if (find_and_update_var(mini_env, var, i))
 		return (0);
-	
 	create_and_add_var(mini_env, var, 0);
 	return (0);
 }

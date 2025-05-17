@@ -12,7 +12,7 @@
 
 #include "commands.h"
 
-char	*join_var_equals_value(const char *var, const char *val)
+char	*join_var_equals_value(char *var, char *val)
 {
 	size_t	len_var;
 	size_t	len_val;
@@ -20,19 +20,18 @@ char	*join_var_equals_value(const char *var, const char *val)
 	size_t	i;
 	size_t	j;
 
-	len_var = 0;
-	len_val = 0;
+	len_var = ft_strlen(var);
+	len_val = ft_strlen(val);
 	i = 0;
 	j = 0;
-	while (var[len_var])
-		len_var++;
-	while (val[len_val])
-		len_val++;
 	res = malloc(len_var + 1 + len_val + 1);
 	if (!res)
 		return (NULL);
 	while (i < len_var)
-		res[i] = var[i++];
+	{
+		res[i] = var[i];
+		i++;
+	}
 	res[i++] = '=';
 	while (j < len_val)
 		res[i++] = val[j++];

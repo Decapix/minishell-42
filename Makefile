@@ -12,6 +12,7 @@ SRCS = env_mini/init_env.c				\
 	   parsing/word_analysing.c			\
 	   parsing/dollars_and_content.c	\
 	   parsing/write_commands.c			\
+	   parsing/utils.c					\
 	   prompt/interface.c				\
 	   prompt/get_next_line.c			\
 	   prompt/terminal.c				\

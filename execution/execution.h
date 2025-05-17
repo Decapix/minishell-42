@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 15:28:25 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 06:37:05 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_double_char(char **arr);
 void	exit_program(t_env *mini_env, int error_code);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
+int		decrement_return_z(int *to_decrement);
 void	make_it_zero(int fd[4]);
 
 int		ft_exit(t_env *mini_env, char **env);
@@ -59,7 +60,8 @@ int		init_exec(t_env *mini_env, t_shell **command, int fd[4], char **path);
 
 pid_t	*init_pid_array(t_env *mini_env, int nb_of_command);
 int		size_t_shell(t_shell *command);
-void	control_for_signal(pid_t *child_id, int nb_of_commands);
+int		sig_ctr(pid_t *child_id, int nb_of_commands);
+int		sync_status(int status);
 void	paint_in_red(pid_t *child_id, int total_child);
 
 #endif

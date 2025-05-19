@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 00:11:19 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/17 06:47:22 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:12:13 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	main(int argc, char **argv, char **envp)
 		path = extract_path(search_path(mini_env));
 		execute_command(mini_env, mini_env->first_command, path);
 		free_double_char(path);
-		printf("exit status of command = %d\n", mini_env->exit);
 		prompt = restart_shell(mini_env);
 	}
 	exit_program(mini_env, -1);

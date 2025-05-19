@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 00:32:04 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 12:43:05 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 15:02:33 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,15 @@ int	give_pipe(t_env *mini_env, t_shell **command, int i)
 {
 	if ((*command)->command)
 	{
-		// Set up output redirection for current command
 		if (!(*command)->first_output)
 		{
 			(*command)->first_output = init_new_io(mini_env, *command, 0);
 			(*command)->first_output->io_mode = 3;
 		}
-		(*command)->output = 1;  // Mark that this command has output redirection
-		
-		// Move to next command
-		*command = (*command)->next_command;
-		
-		// Set up input redirection for next command
+		(*command) = (*command)->next_command;
+		(*command)->input++;
 		(*command)->first_input = init_new_io(mini_env, *command, 1);
 		(*command)->first_input->io_mode = 3;
-		(*command)->input = 1;  // Mark that this command has input redirection
 	}
 	return (i + 1);
 }

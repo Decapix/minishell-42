@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 13:32:10 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 12:47:05 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/17 08:42:23 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ void	*ft_calloc(size_t nb, size_t size);
 int		init_prompt_structure(t_env *mini_env, char *str);
 int		how_many_commands(char *str);
 
+int		ft_intlen(int n);
 int		ft_istoken(char c);
 int		ft_isspace(char c);
 int		ft_isalpha(char c);
+int		ft_isnum(char c);
 int		ft_isquote(char c);
 int		ft_isprint(char c);
+int		ft_isdollar(char c);
+char	*mini_itoa(int n);
 int		check_the_char(t_env *mini_env, t_shell **command, char *str, int i);
 
 int		write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i);

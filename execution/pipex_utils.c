@@ -115,16 +115,3 @@ int	update_path(t_shell *command, char **path)
 	free(tmp);
 	return (1);
 }
-
-void	close_remaining_fds(int fd[4])
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		if (fd[i] > 2)
-			close(fd[i]);
-		i++;
-	}
-}

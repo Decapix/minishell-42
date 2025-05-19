@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:22:49 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 12:24:52 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:12:30 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	give_name(t_env *mini_env, char **to_store, char *str, int i)
 	while (ft_isspace(str[i]))
 		i++;
 	str_size = parsing_through_char(mini_env, str, i) - i;
-	printf("str_size: %d\n", str_size);
 	buffer = ft_calloc(str_size + 1, sizeof(char));
 	if (!buffer)
 		exit_program(mini_env, 2);

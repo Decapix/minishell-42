@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 09:40:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 12:08:30 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 18:54:25 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	loop_for_output(t_shell *command, int fd[4])
 	tmp = command->first_output;
 	while (tmp)
 	{
-		if (fd[3])
+		if (fd[3] && tmp->io_mode != 3)
 			fd[3] = close_and_zero(fd[3]);
 		set_output(tmp, fd);
 		tmp = tmp->next_io;

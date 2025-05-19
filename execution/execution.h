@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 13:10:51 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:45:14 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	free_double_char(char **arr);
 void	exit_program(t_env *mini_env, int error_code);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
+int		close_and_zero(int fd);
 int		decrement_return_z(int *to_decrement);
 void	make_it_zero(int fd[4]);
 

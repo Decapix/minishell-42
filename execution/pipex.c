@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:02:29 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 17:44:53 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 18:51:35 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,8 @@ void	set_output(t_io *output, int fd[4])
 	if (output->io_mode == 3)
 	{
 		pipe(&fd[0]);
-		if (fd[3])
-			fd[3] = close_and_zero(fd[3]);
-		fd[3] = dup(fd[1]);
+		if (!fd[3])
+			fd[3] = dup(fd[1]);
 		close(fd[1]);
 	}
 }

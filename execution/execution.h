@@ -64,5 +64,6 @@ int		size_t_shell(t_shell *command);
 int		sig_ctr(pid_t *child_id, int nb_of_commands);
 int		sync_status(int status);
 void	paint_in_red(pid_t *child_id, int total_child);
+void	close_remaining_fds(int fd[4]);
 
 #endif

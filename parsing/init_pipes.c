@@ -16,15 +16,21 @@ int	give_pipe(t_env *mini_env, t_shell **command, int i)
 {
 	if ((*command)->command)
 	{
+		// Set up output redirection for current command
 		if (!(*command)->first_output)
 		{
 			(*command)->first_output = init_new_io(mini_env, *command, 0);
 			(*command)->first_output->io_mode = 3;
 		}
-		(*command)->output++;
+		(*command)->output = 1;  // Mark that this command has output redirection
+		
+		// Move to next command
 		*command = (*command)->next_command;
+		
+		// Set up input redirection for next command
 		(*command)->first_input = init_new_io(mini_env, *command, 1);
 		(*command)->first_input->io_mode = 3;
+		(*command)->input = 1;  // Mark that this command has input redirection
 	}
 	return (i + 1);
 }

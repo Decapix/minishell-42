@@ -64,21 +64,44 @@ void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd)
 
 void	set_redirection(int fd[4], t_shell *command)
 {
-	if (command->input == 3)
-		close(fd[0]);
+	char buffer[100];
+
+	// Log what we're doing
+	snprintf(buffer, sizeof(buffer),
+		"CMD: %s, input=%d, output=%d, fds=[%d,%d,%d,%d]\n",
+		command->command->str, command->input, command->output,
+		fd[0], fd[1], fd[2], fd[3]);
+	write(2, buffer, ft_strlen(buffer));
+
+	// Handle input redirection
 	if (command->input != 0)
 	{
-		dup2(fd[2], 0);
+		write(2, "Redirecting stdin\n", 18);
+		if (dup2(fd[2], STDIN_FILENO) == -1)
+			perror("dup2 input error");
 		close(fd[2]);
 	}
-	if (command->output)
+
+	// Handle output redirection
+	if (command->output != 0)
 	{
-		if (dup2(fd[3], 1) == -1)
-			perror("fucking hell:");
+		write(2, "Redirecting stdout\n", 19);
+		if (dup2(fd[3], STDOUT_FILENO) == -1)
+			perror("dup2 output error");
 		close(fd[3]);
 	}
-	if (command->output != 0)
-		close(fd[3]);
+
+	// Close all unused file descriptors
+	int i;
+	for (i = 0; i < 4; i++)
+	{
+		if (fd[i] > 2 &&
+			!((i == 2 && command->input != 0) ||
+			  (i == 3 && command->output != 0)))
+		{
+			close(fd[i]);
+		}
+	}
 }
 
 char	**t_lst_to_arr(t_env *mini_env, t_list *lst, char **envp)
@@ -115,23 +138,49 @@ int	exec_com(t_env *mini_env, t_shell *command, int fd[4])
 	pid_t	id_command;
 	char	**envp;
 	char	**arg;
+	char	buffer[100];
+
+	// Log command execution
+	snprintf(buffer, sizeof(buffer), "Executing command: %s\n",
+		command->command->str);
+	write(2, buffer, ft_strlen(buffer));
 
 	id_command = fork();
 	if (!id_command)
 	{
+		// In child process
 		envp = t_env_to_arr(mini_env);
 		arg = t_lst_to_arr(mini_env, command->command, envp);
+
+		// Set up stdin/stdout redirections
 		set_redirection(fd, command);
+
+		// Execute the command
 		if (command->is_buildin)
 			execute_buildin(mini_env, envp, arg, command);
 		execve(command->command->str, arg, envp);
 		error_child(mini_env, command->command, arg, envp);
 	}
-	if (command->input)
+
+	// In parent process
+	// Close file descriptors that we passed to the child
+	// so the parent doesn't hold them open
+
+	if (fd[2] > 2)
+	{
+		write(2, "Parent closing fd[2] (stdin)\n", 29);
 		close(fd[2]);
-	if (command->output)
+	}
+
+	if (fd[3] > 2)
+	{
+		write(2, "Parent closing fd[3] (stdout)\n", 30);
 		close(fd[3]);
+	}
+
+	// Handle exit builtin
 	if (!command->next_command && !ft_strncmp(command->command->str, "exit", 5))
 		return (1);
+
 	return (id_command);
 }

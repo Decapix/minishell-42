@@ -29,6 +29,9 @@ SRCS = env_mini/init_env.c				\
 	   commands/export.c				\
 	   commands/unset.c                 \
 	   commands/echo.c					\
+       commands/cd.c					\
+       commands/cd_utils.c				\
+       commands/export_utils.c			\
 	   errors_and_exits.c				\
 	   libft/utils.c					\
 	   libft/ft_putstr.c				\

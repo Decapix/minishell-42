@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:04:32 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/19 13:03:20 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:11:09 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	is_special_buildin(t_env *mini_env, t_shell *command)
 		ft_export(mini_env, command);
 	if (!ft_strncmp(command->command->str, "unset", 6))
 		ft_unset(mini_env, command);
-	//if (!ft_strncmp(command->command->str, "cd", 3))
-	//	ft_cd(mini_env);
+	if (!ft_strncmp(command->command->str, "cd", 3))
+		ft_cd(mini_env, command);
 	return (0);
 }

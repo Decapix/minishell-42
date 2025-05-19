@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 12:52:13 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:10:51 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		ft_echo(char **str);
 int		ft_pwd(void);
 int		ft_export(t_env *mini_env, t_shell *command);
 int		ft_unset(t_env *mini_env, t_shell *command);
-int		ft_cd(t_env *mini_env);
+int		ft_cd(t_env *mini_env, t_shell *command);
 
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_envsize(t_env *lst);

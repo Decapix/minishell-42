@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:55:45 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 12:10:04 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:21:52 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		ft_isalpha(char c);
 int		ft_isquote(char c);
 int		ft_isprint(char c);
 
+int		ft_putstr_fd(char *str, int fd);
 void	*ft_calloc(size_t nb, size_t size);
 void	exit_program(t_env *mini_env, int error_code);
 char	*get_next_line(int fd);

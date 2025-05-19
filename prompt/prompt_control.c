@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:26:05 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 13:02:39 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:27:41 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,22 @@ int	unclosed_quotes(char *str)
 
 	i = 0;
 	c = 0;
-	quotes = 1;
+	quotes = 0;
 	while (str[i])
 	{
-		if (ft_isquote(str[i]))
+		if (ft_isquote(str[i]) && !quotes)
 		{
 			quotes = 1;
 			c = str[i];
 		}
-		if (str[i] == c)
+		else if (str[i] == c)
 			quotes = 0;
 		i++;
+	}
+	if (quotes)
+	{
+		free(str);
+		ft_putstr_fd("parse error near: unclosed quotes\n", 2);
 	}
 	return (quotes);
 }
@@ -73,7 +78,7 @@ int	check_out_prompt(char **prompt)
 	if (!(*prompt)[0])
 		return (1);
 	if (unclosed_quotes(*prompt))
-		return (0);
+		return (1);
 	status = prompt_compliance(*prompt);
 	while (status == 1)
 		status = ask_for_pipe(prompt);

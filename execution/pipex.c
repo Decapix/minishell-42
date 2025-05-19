@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:02:29 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/17 06:20:44 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:44:53 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	set_input(t_env *mini_env, t_io	*input, int fd[4])
 	if (input->io_mode == 3)
 	{
 		fd[2] = dup(fd[0]);
+		if (fd[2] == -1)
+			perror("mince mince...");
 		close(fd[0]);
 	}
 	return (0);
@@ -91,6 +93,8 @@ void	set_output(t_io *output, int fd[4])
 	if (output->io_mode == 3)
 	{
 		pipe(&fd[0]);
+		if (fd[3])
+			fd[3] = close_and_zero(fd[3]);
 		fd[3] = dup(fd[1]);
 		close(fd[1]);
 	}

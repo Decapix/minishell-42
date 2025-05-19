@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/17 06:02:01 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:40:34 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	set_redirection(int fd[4], t_shell *command)
 		close(fd[0]);
 	if (command->input != 0)
 	{
-		dup2(fd[2], 0);
+		if (dup2(fd[2], 0) == -1)
+			perror("gimme a break...");
 		close(fd[2]);
 	}
 	if (command->output)

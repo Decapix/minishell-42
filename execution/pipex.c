@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:02:29 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 18:51:35 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/19 19:06:42 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	execute_command(t_env *mini_env, t_shell *command, char **path)
 		child_id[i++] = exec_com(mini_env, command, fd);
 		is_special_buildin(mini_env, command);
 		command = command->next_command;
+		fd[3] = 0;
 	}
 	mini_env->exit = sig_ctr(child_id, size_t_shell(mini_env->first_command));
 	free(child_id);

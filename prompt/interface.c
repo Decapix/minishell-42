@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:22:14 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/20 16:07:46 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:24:19 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ char	*show_shell(t_env *mini_env)
 	while (1)
 	{
 		prompt = readline("minishell % ");
+		if (prompt)
+			if (prompt[0])
+				add_history(prompt);
 		if (!check_out_prompt(&prompt))
 			break ;
 	}
 	change_signal(2);
-	if (prompt)
-		if (prompt[0])
-			add_history(prompt);
 	return (prompt);
 }

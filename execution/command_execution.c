@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 18:52:55 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 12:31:10 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int	exec_com(t_env *mini_env, t_shell *command, int fd[4])
 	id_command = fork();
 	if (!id_command)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		envp = t_env_to_arr(mini_env);
 		arg = t_lst_to_arr(mini_env, command->command, envp);
 		set_redirection(fd, command);
@@ -128,6 +130,7 @@ int	exec_com(t_env *mini_env, t_shell *command, int fd[4])
 		execve(command->command->str, arg, envp);
 		error_child(mini_env, command->command, arg, envp);
 	}
+	signal(SIGINT, SIG_IGN);
 	if (command->input)
 		close(fd[2]);
 	if (command->output)

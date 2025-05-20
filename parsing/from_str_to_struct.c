@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 00:29:47 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 14:47:22 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 12:38:37 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	init_prompt_structure(t_env *mini_env, char *str)
 		exit_program(mini_env, 2);
 	first_command = prompt;
 	mini_env->first_command = first_command;
-	while (--commands)
+	while (--commands > 0)
 	{
 		prompt->next_command = ft_calloc(1, sizeof(t_shell));
 		if (!prompt->next_command)

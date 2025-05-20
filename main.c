@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 00:11:19 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 13:12:13 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 12:30:50 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	char			*prompt;
 	char			**path;
 
+	signal(SIGQUIT, SIG_IGN);
 	if (argc != 1 || !argv[0])
 		return (0);
 	mini_env = set_up_env(envp);

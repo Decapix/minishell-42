@@ -6,40 +6,11 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:08:17 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/15 13:48:45 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 12:40:44 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prompt.h"
-
-void	action_sigquit(int i)
-{
-	if (i)
-		return ;
-	else
-		return ;
-}
-
-int	change_sigquit(int mode)
-{
-	static struct sigaction	*act;
-
-	if (!mode)
-	{
-		if (act)
-			free(act);
-		return (1);
-	}
-	if (!act)
-	{
-		act = ft_calloc(1, sizeof(struct sigaction));
-		if (!act)
-			return (0);
-	}
-	act->sa_handler = &action_sigquit;
-	sigaction(SIGQUIT, act, NULL);
-	return (1);
-}
 
 int	change_sigint(int mode)
 {
@@ -69,9 +40,6 @@ int	change_signal(int mode)
 {
 	int	status;
 
-	status = change_sigquit(mode);
-	if (!status)
-		return (status);
 	status = change_sigint(mode);
 	if (!status)
 		return (status);

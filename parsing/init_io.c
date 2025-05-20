@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:02:56 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/20 13:05:54 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 13:12:43 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	give_input(t_env *mini_env, t_shell *command, char *str, int i)
 {
 	t_io	*new_io;
 
-	if (!str[i + 1])
+	if ((!str[i + 1]) || (str[i + 1] == '<' && !str[i + 2]))
 		return (print_error(8));
 	new_io = init_new_io(mini_env, command, 1);
 	if (str[++i] == '<')
@@ -65,7 +65,7 @@ int	give_output(t_env *mini_env, t_shell *command, char *str, int i)
 {
 	t_io	*new_io;
 
-	if (!str[i + 1])
+	if ((!str[i + 1]) || (str[i + 1] == '>' && !str[i + 2]))
 		return (print_error(9));
 	new_io = init_new_io(mini_env, command, 0);
 	if (str[++i] == '>')

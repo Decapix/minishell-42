@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:26:05 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/20 16:21:42 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:32:32 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ int	prompt_compliance(char *str)
 	int	i;
 
 	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '|')
+		return (print_error(7));
 	while (ft_isprint(str[i]))
 		i++;
 	i--;
@@ -110,6 +114,8 @@ int	check_out_prompt(char **prompt)
 	status = prompt_compliance(*prompt);
 	while (status == 1)
 		status = ask_for_pipe(prompt);
+	if (status == -1)
+		return (1);
 	return (0);
 }
 /*

@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:26:05 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 13:27:41 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:21:42 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,32 @@ int	unclosed_quotes(char *str)
 	return (quotes);
 }
 
+int	alone_token(char *str)
+{
+	int		i;
+	int		token;
+	char	c;
+
+	i = 0;
+	token = 0;
+	while (str[i])
+	{
+		c = str[i++];
+		if (c == '>' || c == '<')
+		{
+			if (str[i] == c)
+				i++;
+			while (ft_isspace(str[i]))
+				i++;
+			if (ft_istoken(str[i]))
+				return (print_error(10));
+			if (!str[i] || str[i] == '\n')
+				return (print_error(1));
+		}
+	}
+	return (0);
+}
+
 int	check_out_prompt(char **prompt)
 {
 	int	status;
@@ -78,6 +104,8 @@ int	check_out_prompt(char **prompt)
 	if (!(*prompt)[0])
 		return (1);
 	if (unclosed_quotes(*prompt))
+		return (1);
+	if (alone_token(*prompt))
 		return (1);
 	status = prompt_compliance(*prompt);
 	while (status == 1)

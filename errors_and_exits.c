@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:39:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 13:10:09 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:18:34 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	print_error(int error_code)
 		ft_putstr_fd("parse error near: <\n", 2);
 	if (error_code == 9)
 		ft_putstr_fd("parse error near: >\n", 2);
+	if (error_code == 10)
+		ft_putstr_fd("parse error near token\n", 2);
 	return (-1);
 }
 

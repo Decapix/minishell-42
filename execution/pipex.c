@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:02:29 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 18:51:15 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:58:30 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ void	execute_command(t_env *mini_env, t_shell *command, char **path)
 		if (status == -1)
 			exit_program(mini_env, 2);
 		garbage->child_id[i++] = exec_com(mini_env, command, fd, garbage);
-		is_special_buildin(mini_env, command, garbage);
+		if (command->is_buildin)
+			is_special_buildin(mini_env, command, garbage);
 		command = command->next_command;
 		fd[3] = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:55:31 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 12:18:14 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 18:45:13 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	ft_echo(char **str)
 	{
 		write(1, str[i], ft_strlen(str[i]));
 		i++;
-		write(1, " ", 1);
+		if (str[i])
+			write(1, " ", 1);
 	}
 	if (!option)
 		write(1, "\n", 1);

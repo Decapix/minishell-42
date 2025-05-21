@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 17:03:17 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:32:29 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	change_dollar(t_env *mini_env, char *buffer, char *str, int quotes)
 	}
 	if (!mini_env->var_name)
 		return (i);
-	if (ft_isspace(str[1]) || !str[1])
+	if (ft_isspace(str[1]) || !str[1] || ((str[1] == '"' && quotes)))
 		copy_correct_var(mini_env, str, buffer, -1);
 	copy_correct_var(mini_env, str, buffer, i);
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:04:39 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 11:19:05 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:03:17 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	write_and_jump_quotes(t_env *mini_env, char *buffer, char *str, int i)
 	while (!ft_isspace(str[i]) && !ft_istoken(str[i]) && str[i])
 	{
 		if (ft_isquote(str[i]))
-			j = handle_quotes(mini_env, &buffer[j], str, &i);
+			j += handle_quotes(mini_env, &buffer[j], str, &i);
 		else
 		{
 			if (str[i] == '$')

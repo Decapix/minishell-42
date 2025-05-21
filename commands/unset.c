@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:41:04 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/21 13:43:04 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:30:44 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int	search_list(t_env **begin, t_env *mini_env, char *str)
 			if (*begin == mini_env)
 				return (prune_element(mini_env));
 			tmp1 = mini_env->next_var;
-			prune_element(mini_env);
-			free(mini_env);
+			(prune_element(mini_env), free(mini_env));
 			if (!tmp2)
 				*begin = tmp1;
 			else

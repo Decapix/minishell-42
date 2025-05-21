@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:57:50 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/21 16:49:18 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:00:24 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	size_t_shell(t_shell *command)
 	res = 0;
 	while (command)
 	{
-		if (command->command)
-			res++;
+		res++;
 		command = command->next_command;
 	}
 	return (res);

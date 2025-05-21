@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:00 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/19 17:45:14 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:40:32 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		close_and_zero(int fd);
 int		decrement_return_z(int *to_decrement);
 void	make_it_zero(int fd[4]);
 
-int		ft_exit(t_env *mini_env, char **env);
+int		ft_exit(t_env *mini_env, t_leak *garbage);
 int		ft_env(t_env *mini_env);
 int		ft_echo(char **str);
 int		ft_pwd(void);
@@ -49,12 +49,15 @@ char	*get_next_line(int fd);
 char	**t_env_to_arr(t_env *mini_env);
 void	execute_command(t_env *mini_env, t_shell *command, char **path);
 int		update_path(t_shell *command, char **path);
-int		exec_com(t_env *env, t_shell *command, int fd[4]);
-int		error_child(t_env *mini_env, t_list *lst, char **arg, char **envp);
+int		exec_com(t_env *env, t_shell *command, int fd[4], t_leak *garbage);
 
-int		is_special_buildin(t_env *mini_env, t_shell *command);
+t_leak	*nice_little_trash(t_env *mini_env, char **path, t_shell *command);
+int		clean_garbage(t_leak *garbage);
+int		error_child(t_env *mini_env, t_list *lst, t_leak *garbage);
+
+int		is_special_buildin(t_env *mini_env, t_shell *command, t_leak *garbage);
 int		ft_isbuildin(char *str);
-void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd);
+void	execute_buildin(t_env *mini_env, t_leak *gar, char **arg, t_shell *cmd);
 
 int		set_input(t_env *mini_env, t_io	*input, int fd[4]);
 void	set_output(t_io *output, int fd[4]);

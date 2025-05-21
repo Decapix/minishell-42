@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 19:10:40 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 18:40:14 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void	execute_buildin(t_env *mini_env, t_leak *gar, char **arg, t_shell *cmd)
 
 void	set_redirection(int fd[4], t_shell *command)
 {
-	if (command->input == 3)
-		close(fd[1]);
+	if (command->first_input)
+		if (command->first_input->io_mode == 3)
+			close(fd[1]);
 	if (command->input != 0)
 	{
 		if (dup2(fd[2], 0) == -1)
@@ -78,8 +79,9 @@ void	set_redirection(int fd[4], t_shell *command)
 			perror("fucking hell:");
 		close(fd[3]);
 	}
-	if (command->output == 3)
-		close(fd[0]);
+	if (command->first_output)
+		if (fd[0])
+			close(fd[0]);
 }
 
 char	**t_lst_to_arr(t_env *mini_env, t_list *lst, char **envp)

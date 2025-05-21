@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:04:32 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/21 16:48:37 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:14:12 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	is_special_buildin(t_env *mini_env, t_shell *command, t_leak *garbage)
 {
 	if (!ft_strncmp(command->command->str, "exit", 5))
 	{
-		if (command->output == 3)
+		if (command->next_command)
 			return (0);
 		else
 			ft_exit(mini_env, garbage);

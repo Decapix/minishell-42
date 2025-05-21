@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 16:50:42 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 19:10:40 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int	exec_com(t_env *mini_env, t_shell *command, int fd[4], t_leak *gar)
 		set_redirection(fd, command);
 		if (command->is_buildin)
 			execute_buildin(mini_env, gar, gar->arg, command);
+		if (!gar->arg[0])
+			exit_program(mini_env, clean_garbage(gar));
 		execve(command->command->str, gar->arg, gar->envp);
 		error_child(mini_env, command->command, gar);
 	}
@@ -132,7 +134,8 @@ int	exec_com(t_env *mini_env, t_shell *command, int fd[4], t_leak *gar)
 		close(fd[2]);
 	if (command->output)
 		close(fd[3]);
-	if (!command->next_command && !ft_strncmp(command->command->str, "exit", 5))
-		return (1);
+	if (command->command && !command->next_command)
+		if (!ft_strncmp(command->command->str, "exit", 5))
+			return (1);
 	return (id_command);
 }

@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:26:05 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 13:51:32 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:25:53 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int	alone_token(char *str)
 	while (str[i])
 	{
 		c = str[i++];
+		if (ft_isquote(c))
+			while (str[i] != c)
+				i++;
 		if (c == '>' || c == '<')
 		{
 			if (str[i] == c)

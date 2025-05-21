@@ -6,7 +6,7 @@
 /*   By: apesic <apesic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:41:04 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/21 15:47:47 by apesic           ###   ########.fr       */
+/*   Updated: 2025/05/21 17:13:02 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	search_list(t_env **begin, t_env *mini_env, char *str, char *v)
 	tmp2 = 0;
 	while (mini_env)
 	{
+		v = mini_env->var_name;
 		if (v && !ft_strncmp(v, str, ft_strlen(str) + 1))
 		{
 			if (*begin == mini_env)
@@ -44,10 +45,8 @@ static int	search_list(t_env **begin, t_env *mini_env, char *str, char *v)
 			return (0);
 		}
 		else
-		{
 			tmp2 = mini_env;
-			mini_env = mini_env->next_var;
-		}
+		mini_env = mini_env->next_var;
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
+/*   By: apesic <apesic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:41:04 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/21 14:30:44 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:47:47 by apesic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	prune_element(t_env *mini_env)
 	return (0);
 }
 
-int	search_list(t_env **begin, t_env *mini_env, char *str)
+static int	search_list(t_env **begin, t_env *mini_env, char *str, char *v)
 {
 	t_env	*tmp1;
 	t_env	*tmp2;
@@ -31,8 +31,7 @@ int	search_list(t_env **begin, t_env *mini_env, char *str)
 	tmp2 = 0;
 	while (mini_env)
 	{
-		if (mini_env->var_name && !ft_strncmp(mini_env->var_name, str,
-				ft_strlen(str) + 1))
+		if (v && !ft_strncmp(v, str, ft_strlen(str) + 1))
 		{
 			if (*begin == mini_env)
 				return (prune_element(mini_env));
@@ -76,7 +75,7 @@ int	ft_unset(t_env *mini_env, t_shell *command)
 		if (!mini_env->next_var)
 			search_element(mini_env, cmd_args->str);
 		else
-			search_list(&begin, begin, cmd_args->str);
+			search_list(&begin, begin, cmd_args->str, begin->var_name);
 		cmd_args = cmd_args->next;
 	}
 	return (0);

@@ -6,14 +6,13 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 12:57:50 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/21 16:00:24 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:30:35 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
 int	ft_isbuildin(char *str)
-	//check for last item if it is \n if this function does work
 {
 	if (!ft_strncmp(str, "echo", 5))
 		return (1);

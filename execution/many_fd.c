@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 09:40:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 19:04:07 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:35:17 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	init_exec(t_env *mini_env, t_shell **command, int fd[4], char **path)
 
 	status = 0;
 	if (loop_for_input(mini_env, *command, fd))
+	{
+		mini_env->exit = 1;
 		return (3);
+	}
 	loop_for_output(*command, fd);
 	if (!(*command)->command)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: apesic <apesicstudent.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:41:04 by apesic            #+#    #+#             */
-/*   Updated: 2025/05/16 13:36:15 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:43:04 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	prune_element(t_env *mini_env)
 {
-	free(mini_env->var_name);
+	if (mini_env->var_name)
+		free(mini_env->var_name);
 	mini_env->var_name = 0;
-	free(mini_env->var);
+	if (mini_env->var)
+		free(mini_env->var);
 	mini_env->var = 0;
 	return (0);
 }
@@ -32,6 +34,8 @@ int	search_list(t_env **begin, t_env *mini_env, char *str)
 		if (mini_env->var_name && !ft_strncmp(mini_env->var_name, str,
 				ft_strlen(str) + 1))
 		{
+			if (*begin == mini_env)
+				return (prune_element(mini_env));
 			tmp1 = mini_env->next_var;
 			prune_element(mini_env);
 			free(mini_env);

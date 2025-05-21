@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:26:05 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/20 16:32:32 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:51:32 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,9 @@ int	unclosed_quotes(char *str)
 int	alone_token(char *str)
 {
 	int		i;
-	int		token;
 	char	c;
 
 	i = 0;
-	token = 0;
 	while (str[i])
 	{
 		c = str[i++];

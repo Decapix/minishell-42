@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 00:11:19 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/20 12:30:50 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:28:38 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@ volatile sig_atomic_t	g_status = 0;
 
 char	*search_path(t_env *mini_env)
 {
-	t_env	*tmp;
-
-	tmp = mini_env;
 	while (mini_env)
 	{
-		if (!ft_strncmp(mini_env->var_name, "PATH", 4))
-			return (mini_env->var);
+		if (mini_env->var)
+			if (!ft_strncmp(mini_env->var_name, "PATH", 4))
+				return (mini_env->var);
 		mini_env = mini_env->next_var;
 	}
-	printf("error! path not found\n");
-	exit_program(tmp, -1);
+	printf("error! path env not found\n");
 	return (0);
 }
 
@@ -58,7 +55,6 @@ int	main(int argc, char **argv, char **envp)
 			prompt = restart_shell(mini_env);
 		path = extract_path(search_path(mini_env));
 		execute_command(mini_env, mini_env->first_command, path);
-		free_double_char(path);
 		prompt = restart_shell(mini_env);
 	}
 	exit_program(mini_env, -1);

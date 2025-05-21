@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 21:08:41 by jlepany           #+#    #+#             */
-/*   Updated: 2025/04/14 13:57:26 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:10:54 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,14 @@ char	**extract_path(char *full_path)
 	char	**paths;
 
 	i = 0;
+	if (!full_path)
+		return (0);
 	nb_paths = total_nb_paths(full_path);
 	if (!nb_paths)
 		return (0);
 	paths = ft_calloc(nb_paths + 1, sizeof(char *));
+	if (!paths)
+		return (0);
 	k = 0;
 	while (k < nb_paths)
 	{

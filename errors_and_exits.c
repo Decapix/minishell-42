@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:39:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/20 16:18:34 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:26:18 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_double_char(char **array)
 	int	i;
 
 	i = 0;
-	if (array == NULL)
+	if (!array)
 		return ;
 	while (array[i] != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:02:29 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 16:41:03 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 18:51:15 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	execute_command(t_env *mini_env, t_shell *command, char **path)
 	while (command)
 	{
 		status = init_exec(mini_env, &command, fd, path);
-		if (status == 2)
+		if (status == 2 || status == 3)
 			break ;
 		if (status == -1)
 			exit_program(mini_env, 2);
@@ -121,7 +121,8 @@ void	execute_command(t_env *mini_env, t_shell *command, char **path)
 		command = command->next_command;
 		fd[3] = 0;
 	}
-	mini_env->exit = sig_ctr(garbage->child_id,
-			size_t_shell(mini_env->first_command));
+	if (status != 3)
+		mini_env->exit = sig_ctr(garbage->child_id,
+				size_t_shell(mini_env->first_command));
 	clean_garbage(garbage);
 }

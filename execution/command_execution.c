@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:46:02 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 14:19:49 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:50:42 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ char	**t_env_to_arr(t_env *mini_env)
 	return (env_arr);
 }
 
-void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd)
+void	execute_buildin(t_env *mini_env, t_leak *gar, char **arg, t_shell *cmd)
 {
 	if (!ft_strncmp(cmd->command->str, "echo", 5))
 		ft_echo(arg);
-	free_double_char(arg);
 	if (!ft_strncmp(cmd->command->str, "exit", 5))
-		ft_exit(mini_env, envp);
+		ft_exit(mini_env, gar);
 	if (!ft_strncmp(cmd->command->str, "env", 4))
 		ft_env(mini_env);
 	if (!ft_strncmp(cmd->command->str, "pwd", 4))
@@ -59,7 +58,7 @@ void	execute_buildin(t_env *mini_env, char **envp, char **arg, t_shell *cmd)
 		ft_unset(mini_env, cmd);
 	if (!ft_strncmp(cmd->command->str, "cd", 3))
 		ft_cd(mini_env, cmd);
-	free_double_char(envp);
+	clean_garbage(gar);
 	exit_program(mini_env, 0);
 }
 
@@ -112,24 +111,22 @@ char	**t_lst_to_arr(t_env *mini_env, t_list *lst, char **envp)
 	return (res);
 }
 
-int	exec_com(t_env *mini_env, t_shell *command, int fd[4])
+int	exec_com(t_env *mini_env, t_shell *command, int fd[4], t_leak *gar)
 {
 	pid_t	id_command;
-	char	**envp;
-	char	**arg;
 
 	id_command = fork();
 	if (!id_command)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		envp = t_env_to_arr(mini_env);
-		arg = t_lst_to_arr(mini_env, command->command, envp);
+		gar->envp = (t_env_to_arr(mini_env));
+		gar->arg = (t_lst_to_arr(mini_env, command->command, gar->envp));
 		set_redirection(fd, command);
 		if (command->is_buildin)
-			execute_buildin(mini_env, envp, arg, command);
-		execve(command->command->str, arg, envp);
-		error_child(mini_env, command->command, arg, envp);
+			execute_buildin(mini_env, gar, gar->arg, command);
+		execve(command->command->str, gar->arg, gar->envp);
+		error_child(mini_env, command->command, gar);
 	}
 	if (command->input)
 		close(fd[2]);

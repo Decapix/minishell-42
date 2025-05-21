@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:02:29 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 14:18:52 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:41:03 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ void	execute_command(t_env *mini_env, t_shell *command, char **path)
 	int		fd[4];
 	int		i;
 	int		status;
-	pid_t	*child_id;
+	t_leak	*garbage;
 
-	child_id = init_pid_array(mini_env, size_t_shell(command));
+	garbage = nice_little_trash(mini_env, path, command);
 	i = 0;
 	make_it_zero(fd);
 	while (command)
@@ -116,16 +116,12 @@ void	execute_command(t_env *mini_env, t_shell *command, char **path)
 			break ;
 		if (status == -1)
 			exit_program(mini_env, 2);
-		child_id[i++] = exec_com(mini_env, command, fd);
-		if (child_id[i - 1] == 1)
-		{
-			free_double_char(path);
-			free(child_id);
-		}
-		is_special_buildin(mini_env, command);
+		garbage->child_id[i++] = exec_com(mini_env, command, fd, garbage);
+		is_special_buildin(mini_env, command, garbage);
 		command = command->next_command;
 		fd[3] = 0;
 	}
-	mini_env->exit = sig_ctr(child_id, size_t_shell(mini_env->first_command));
-	free(child_id);
+	mini_env->exit = sig_ctr(garbage->child_id,
+			size_t_shell(mini_env->first_command));
+	clean_garbage(garbage);
 }

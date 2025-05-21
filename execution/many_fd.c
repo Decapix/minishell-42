@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 09:40:58 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 14:23:16 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:58:57 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,5 @@ int	init_exec(t_env *mini_env, t_shell **command, int fd[4], char **path)
 		(*command)->is_buildin = 1;
 	else if (!ft_isbuildin((*command)->command->str) && path)
 		status = update_path(*command, path);
-	if (path)
-		free_double_char(path);
 	return (status);
 }

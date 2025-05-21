@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 00:11:19 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 14:28:38 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:15:44 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*search_path(t_env *mini_env)
 				return (mini_env->var);
 		mini_env = mini_env->next_var;
 	}
-	printf("error! path env not found\n");
 	return (0);
 }
 

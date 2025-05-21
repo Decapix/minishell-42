@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42,fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 11:55:31 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/16 15:40:56 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 12:18:14 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	check_for_n(char *str)
 {
+	if (!str)
+		return (0);
 	if (str[0] == '-' && str[1] == 'n' && !str[2])
 		return (1);
 	else

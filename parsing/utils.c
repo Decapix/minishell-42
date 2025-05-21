@@ -6,7 +6,7 @@
 /*   By: jlepany <jlepany@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:50:11 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 11:27:15 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 12:03:03 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	ft_isdollar(char c)
 
 char	*mini_itoa(int n)
 {
-	printf("this is n: %d\n", n);
 	if (!n)
 		return ("0");
 	if (n == 1)

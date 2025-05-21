@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:33:11 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/21 17:53:06 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 18:44:06 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,9 @@ int	sig_ctr(pid_t *child_id, int total_child)
 			if (i == tmp - 1 && child_id[i])
 				result = waitpid(child_id[i], &status, WNOHANG);
 			else if (child_id[i])
-			{
 				result = waitpid(child_id[i], 0, WNOHANG);
-				printf("doing some fun thinks lol\n");
-			}
 			if (result)
-			{
 				child_id[i] = decrement_return_z(&total_child);
-				printf("child number %d has ended\n", i);
-			}
 			if (g_status == 2)
 				paint_in_red(child_id, tmp);
 			i++;

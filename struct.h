@@ -6,7 +6,7 @@
 /*   By: jlepany <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:16:50 by jlepany           #+#    #+#             */
-/*   Updated: 2025/05/17 06:07:33 by jlepany          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:32:21 by jlepany          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,17 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <sys/types.h>
 
 extern volatile sig_atomic_t	g_status;
+
+typedef struct garbage_collector
+{
+	char	**path;
+	char	**envp;
+	char	**arg;
+	pid_t	*child_id;
+}			t_leak;
 
 typedef struct basic_list
 {

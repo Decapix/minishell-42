@@ -65,9 +65,6 @@ int	ft_exit(t_env *mini_env, t_leak *garbage, t_shell *cmd)
 	t_list	*arg_list;
 	int		is_child;
 
-	is_child = (getppid() != g_status);
-	if (!is_child)
-		write(1, "exit\n", 5);
 	clean_garbage(garbage);
 	exit_code = 0;
 	arg_list = cmd->command;

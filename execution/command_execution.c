@@ -46,7 +46,7 @@ void	execute_buildin(t_env *mini_env, t_leak *gar, char **arg, t_shell *cmd)
 	if (!ft_strncmp(cmd->command->str, "echo", 5))
 		ft_echo(arg);
 	if (!ft_strncmp(cmd->command->str, "exit", 5))
-		ft_exit(mini_env, gar);
+		ft_exit(mini_env, gar, cmd);
 	if (!ft_strncmp(cmd->command->str, "env", 4))
 		ft_env(mini_env);
 	if (!ft_strncmp(cmd->command->str, "pwd", 4))

@@ -29,7 +29,7 @@ void	ft_lstadd_back(t_list **lst, t_list *neww);
 t_list	*ft_lstnew(char *str);
 char	*join_var_equals_value(char *var, char *val);
 
-int		ft_exit(t_env *mini_env, t_leak *garbage);
+int		ft_exit(t_env *mini_env, t_leak *garbage, t_shell *cmd);
 int		ft_env(t_env *mini_env);
 int		ft_echo(char **str);
 int		ft_pwd(void);

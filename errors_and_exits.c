@@ -96,7 +96,8 @@ void	exit_program(t_env *mini_env, int error_code)
 {
 	t_env	*tmp;
 
-	print_error(error_code);
+	if (error_code > 0 && error_code < 11)
+		print_error(error_code);
 	change_signal(0);
 	if (mini_env->first_command && error_code != -1)
 		free_command_struct(mini_env->first_command);

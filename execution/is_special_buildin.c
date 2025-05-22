@@ -55,12 +55,14 @@ t_leak	*nice_little_trash(t_env *mini_env, char **path, t_shell *command)
 
 int	is_special_buildin(t_env *mini_env, t_shell *command, t_leak *garbage)
 {
+	if (!command || !command->command || !command->command->str)
+		return (0);
 	if (!ft_strncmp(command->command->str, "exit", 5))
 	{
 		if (command->next_command)
 			return (0);
 		else
-			ft_exit(mini_env, garbage);
+			return (ft_exit(mini_env, garbage, command));
 	}
 	if (!ft_strncmp(command->command->str, "export", 7))
 		ft_export(mini_env, command);

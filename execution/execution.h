@@ -32,7 +32,7 @@ int		close_and_zero(int fd);
 int		decrement_return_z(int *to_decrement);
 void	make_it_zero(int fd[4]);
 
-int		ft_exit(t_env *mini_env, t_leak *garbage);
+int		ft_exit(t_env *mini_env, t_leak *garbage, t_shell *cmd);
 int		ft_env(t_env *mini_env);
 int		ft_echo(char **str);
 int		ft_pwd(void);

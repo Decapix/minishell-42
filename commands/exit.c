@@ -43,35 +43,37 @@ static int	count_args(t_list *arg_list)
 	return (count);
 }
 
+static void	handle_exit_errors(char *arg, t_env *mini_env, 
+					t_list *arg_list, int *exit_code)
+{
+	if (!is_numeric(arg))
+	{
+		write(2, "minishell: exit: numeric argument required\n", 42);
+		exit_program(mini_env, 255);
+	}
+	*exit_code = ft_atoi(arg);
+	if (count_args(arg_list) > 2)
+	{
+		write(2, "minishell: exit: too many arguments\n", 36);
+		*exit_code = 1;
+	}
+}
+
 int	ft_exit(t_env *mini_env, t_leak *garbage, t_shell *cmd)
 {
 	int		exit_code;
 	t_list	*arg_list;
-	char	*arg;
+	int		is_child;
 
-	write(1, "exit\n", 5);
+	is_child = (getppid() != g_status);
+	if (!is_child)
+		write(1, "exit\n", 5);
 	clean_garbage(garbage);
 	exit_code = 0;
 	arg_list = cmd->command;
 	if (arg_list && arg_list->next)
-	{
-		arg = arg_list->next->str;
-		if (!is_numeric(arg))
-		{
-			write(2, "minishell: exit: numeric argument required\n", 42);
-			exit_program(mini_env, 255);
-		}
-		else
-		{
-			exit_code = ft_atoi(arg);
-			if (count_args(arg_list) > 2)
-			{
-				write(2, "minishell: exit: too many arguments\n", 36);
-				return (0);
-			}
-		}
-	}
+		handle_exit_errors(arg_list->next->str, mini_env, arg_list, &exit_code);
 	if (cmd->next_command == NULL)
 		exit_program(mini_env, exit_code);
-	return (0);
+	return (exit_code);
 }

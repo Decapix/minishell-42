@@ -22,5 +22,6 @@ char	*ft_strchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_putstr_fd(char *str, int fd);
 int		ft_atoi(const char *str);
+void	*ft_calloc(size_t nb, size_t size);
 
 #endif

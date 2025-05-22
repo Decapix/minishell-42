@@ -43,7 +43,7 @@ static int	count_args(t_list *arg_list)
 	return (count);
 }
 
-static void	handle_exit_errors(char *arg, t_env *mini_env, 
+static void	handle_exit_errors(char *arg, t_env *mini_env,
 					t_list *arg_list, int *exit_code)
 {
 	if (!is_numeric(arg))

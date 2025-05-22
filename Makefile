@@ -34,6 +34,7 @@ SRCS = env_mini/init_env.c				\
        commands/export_utils.c			\
 	   errors_and_exits.c				\
 	   libft/utils.c					\
+	   libft/utils2.c					\
 	   libft/ft_putstr.c				\
 	   main.c
 
